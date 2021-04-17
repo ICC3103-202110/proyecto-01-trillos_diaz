@@ -1,9 +1,8 @@
-#from game import Game
+from game import Game
 
 
 def main():
-    thung = Game(1)
-    thung.gameplay()
+    Game.gameplay()
 
 
 
