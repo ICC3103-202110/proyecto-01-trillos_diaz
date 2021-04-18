@@ -1,6 +1,7 @@
+from card import Card
 
-class Ambassador():
-    def __init__(self):
+
+class Ambassador(Card):
         pass
 
     #def gameplay(self):
