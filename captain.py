@@ -1,6 +1,6 @@
+from card import Card
 
-
-class Captain():
+class Captain(Card):
     def __init__(self):
         pass
 

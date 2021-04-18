@@ -1,6 +1,6 @@
+from card import Card
 
-
-class Assasin():
+class Assasin(Card):
     def __init__(self):
         pass
 

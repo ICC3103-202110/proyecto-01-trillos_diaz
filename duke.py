@@ -1,6 +1,6 @@
+from card import Card
 
-
-class Duke():
+class Duke(Card):
     def __init__(self):
         pass
 
