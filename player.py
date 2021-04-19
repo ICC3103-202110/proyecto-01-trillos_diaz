@@ -28,6 +28,15 @@ class Player():
                 gamer = 0
             elif(gamer!=0):
                 return gamer
+    def SeeCoins(self):
+        print(self.coins)
+
+    def SeeCards(self):
+        print(self.card1)
+        print(self.card2)
+
+    def ChallengePlayer(self):
+        pass
 
 
     #def gameplay(self):
