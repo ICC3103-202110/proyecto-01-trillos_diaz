@@ -9,6 +9,7 @@ from duke import Duke
 class Deck():
     def __init__(self,playercount):
         self.playercount = playercount
+        self.cardDeck = []
     
     def GenerateCards(self):
         ambas1 = Ambassador(1)
@@ -26,17 +27,25 @@ class Deck():
         duke1 = Duke(13)
         duke2 = Duke(14)
         duke3 = Duke(15)
-        deck=[ambas1,ambas2,ambas3,assasin1,assasin2,assasin3,captain1,captain2,captain3,contessa1,contessa2,contessa3,duke1,duke2,duke3]
+        self.cardDeck=[ambas1,ambas2,ambas3,assasin1,assasin2,assasin3,captain1,captain2,captain3,contessa1,contessa2,contessa3,duke1,duke2,duke3]
         print(ambas1.cardStatusShow())
+        """
         deckid=[ambas1.cardStatusShow(),ambas2.cardStatusShow(),ambas3.cardStatusShow(),assasin1.cardStatusShow()
         ,assasin2.cardStatusShow(),assasin3.cardStatusShow(),captain1.cardStatusShow(),captain2.cardStatusShow()
         ,captain3.cardStatusShow(),contessa1.cardStatusShow(),contessa2.cardStatusShow(),contessa3.cardStatusShow(),duke1.cardStatusShow(),duke2.cardStatusShow(),duke3.cardStatusShow()]
-        random.shuffle(deck)
-        random.shuffle(deckid)
+        """
+        random.shuffle(self.cardDeck)
+        #random.shuffle(deckid)
         duke1.cardprint()
-        print(deck)
-        print(deckid)
+        print(self.cardDeck)
+        #print(deckid)
         
+    def takeCard(self):
+        curcard = self.cardDeck[0]
+        self.cardDeck.pop(0)
+        print(curcard)
+        return curcard
+
     
     #def RandomizeCards(self):
         #deck = cards
@@ -49,3 +58,4 @@ lista=[]
 bruh = Deck(4)
 bruh.GenerateCards()
 mazo = Card(lista)
+aaaa = bruh.takeCard()
