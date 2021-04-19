@@ -13,7 +13,7 @@ class Deck():
         self.cardDeck = []
     
     def GenerateCards(self):
-        ambas1 = Ambassador(1)
+        ambas1 = Ambassador(ambassador)
         ambas2 = Ambassador(2)
         ambas3 = Ambassador(3)
         assasin1 = Assasin(4)
