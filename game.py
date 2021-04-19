@@ -29,8 +29,10 @@ class Game():
             player4 = Player(4,2,card11,card22)
             player4.SeeCards()
         print("bruh")
-        player1.SeeCoins()
+        #player1.SeeCoins()
         #player1.coins()
-        player1.SeeCoins()
+        #player1.SeeCoins()
         player1.canDoRial()
+        player1.cardCoinCost(1)
+        
         

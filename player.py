@@ -43,6 +43,12 @@ class Player():
                 
     def SeeCoins(self):
         print(self.coins)
+    
+    def cardCoinCost(self,cardnum):
+        if cardnum == 1:
+            print(self.__card1.cardCost)
+        else:
+            print(self.__card1.cardCost)
 
     def SeeCards(self):
         print(self.__card1)

@@ -1,9 +1,12 @@
 
 
 class Card():
-    def __init__(self,cardID):
+
+    def __init__(self,cardID,cardStatus,cardCost):
         self.__cardID = cardID
-        self.__cardStatus = "hidden"
+        self.__cardStatus = cardStatus
+        self.__cardCost = cardCost
+        
 
     @property
     def cardID(self):
@@ -33,8 +36,13 @@ class Card():
     def cardStatusShow(self):
         print(self.__cardStatus)
 
-    #def dukeTax(self):
-        #Player.coins(2)
+    @property
+    def cardCost(self):
+        return self.__cardCost
+    
+    
+
+        
 
         
 
