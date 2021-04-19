@@ -41,7 +41,12 @@ class Deck():
         #print(self.cardDeck)
         #print(deckid)
         
-    def takeCard(self,card2replace):
+    def takeCard(self):
+        curcard = self.cardDeck[0]
+        self.cardDeck.pop(0)
+        return curcard
+
+    def replaceCard(self,card2replace):
         curcard = self.cardDeck[0]
         self.cardDeck.pop(0)
         self.cardDeck.append(card2replace)
@@ -49,43 +54,32 @@ class Deck():
         return curcard
     
     def startGame(self):
-        card11 = self.cardDeck[0]
-        self.cardDeck.pop(0)
-        card22 = self.cardDeck[0]
-        self.cardDeck.pop(0)
+        card11 = self.takeCard()
+        card22 = self.takeCard()
         player1 = Player(1,2,card11,card22)
         player1.SeeCards()
-        card11 = self.cardDeck[0]
-        self.cardDeck.pop(0)
-        card22 = self.cardDeck[0]
-        self.cardDeck.pop(0)
+        card11 = self.takeCard()
+        card22 = self.takeCard()
         player2 = Player(2,2,card11,card22)
         player2.SeeCards()
-        card11 = self.cardDeck[0]
-        self.cardDeck.pop(0)
-        card22 = self.cardDeck[0]
-        self.cardDeck.pop(0)
+        card11 = self.takeCard()
+        card22 = self.takeCard()
         player3 = Player(3,2,card11,card22)
         player3.SeeCards()
         if self.playerCount == 4:
-            card11 = self.cardDeck[0]
-            self.cardDeck.pop(0)
-            card22 = self.cardDeck[0]
-            self.cardDeck.pop(0)
+            card11 = self.takeCard()
+            card22 = self.takeCard()
             player4 = Player(4,2,card11,card22)
             player4.SeeCards()
-
-    
-        
-        
-
+        player1.SeeCoins()
+        player1.Getincome()
+        player1.SeeCoins()
 
     #def RandomizeCards(self):
         #deck = cards
         #random.shuffle(deck)
         #return deck
  
-        
 lista=[]
 
 bruh = Deck(4)
