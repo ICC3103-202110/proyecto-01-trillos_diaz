@@ -1,8 +1,4 @@
-from ambassador import Ambassador
-from assasin import Assasin
-from captain import Captain
-from contessa import Contessa
-from duke import Duke  
+from card import Card
 
 class Player():
     def __init__(self,number,coins,card1,card2):
@@ -11,6 +7,17 @@ class Player():
         self.__card1 = card1
         self.__card2 = card2
 
+    #def getCoins(self,coinAmmount):
+        #self.coins+=coinAmmount
+    #@property
+    #def coins(self):
+        #return self.coins
+    
+    #@coins.setter
+    #def coins(self,coinAmmount):
+        #self.coins+=1
+
+
     def Getincome(self):
         self.coins += 1
         print(self.coins)
@@ -18,6 +25,7 @@ class Player():
     def GetForeignAid(self):
         self.coins += 2
         print(self.coins)
+    
 
     def DoCoup(self):
         num = int(self.number)
@@ -64,8 +72,8 @@ class Player():
 
     #def gameplay(self):
 
-j1 = Player(1,2,"uwu","ewe")
-j1.DoCardAction()
+#j1 = Player(1,2,"uwu","ewe")
+#j1.DoCardAction()
 
 
 

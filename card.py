@@ -1,5 +1,4 @@
-from player import Player
-from deck import Deck
+
 
 class Card():
     def __init__(self,cardID):
@@ -31,6 +30,8 @@ class Card():
         print(self.__cardStatus)
 
     #def dukeTax(self):
+        #Player.coins(2)
+
         
 
 #card1 = Card(1)
