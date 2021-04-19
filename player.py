@@ -44,3 +44,4 @@ j1.GetForeignAid()
 
 ewe = j1.DoCoup()
 print(ewe)
+
