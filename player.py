@@ -28,12 +28,13 @@ class Player():
                 gamer = 0
             elif(gamer!=0):
                 return gamer
+                
     def SeeCoins(self):
         print(self.coins)
 
     def SeeCards(self):
-        print(self.card1)
-        print(self.card2)
+        print(self.__card1)
+        print(self.__card2)
 
     def ChallengePlayer(self):
         pass
@@ -42,15 +43,6 @@ class Player():
     #def gameplay(self):
 
 
-j1 = Player(1,5,0,1)
-print(j1)
-j1.Getincome()
-print(j1)
-j1.Getincome()
-j1.Getincome()
-j1.Getincome()
-j1.GetForeignAid()
 
-ewe = j1.DoCoup()
-print(ewe)
+
 
