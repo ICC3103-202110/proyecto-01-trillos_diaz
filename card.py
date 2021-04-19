@@ -29,9 +29,9 @@ class Card():
     def cardStatusShow(self):
         print(self.__cardStatus)
 
-card1 = Card(1)
-card1.cardStatusShow()
-card1.cardStatusSet()
-card1.cardStatusShow()
+#card1 = Card(1)
+#card1.cardStatusShow()
+#card1.cardStatusSet()
+#card1.cardStatusShow()
 
     
