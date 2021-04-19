@@ -50,6 +50,9 @@ class Player():
 
     def ChallengePlayer(self):
         pass
+        #if():
+
+        #if():
 
     def canDoRial(self):
         print(self.__card1.cardIDShow())
@@ -58,19 +61,20 @@ class Player():
     def DoCardAction(self):
         print("Please select wich Card you want to perform")
         print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")
-        select = input()
+        select = int(input())
         if(select==1):
+            print("uwu")
+            return 1
             
-            pass
         if(select==2):
+            return 2
             
-            pass
         if(select==3):
             
-            pass
+            return 3
         if(select==4):
+            return 4
             
-            pass
 
 
 
