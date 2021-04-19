@@ -36,12 +36,15 @@ class Deck():
         ,captain3.cardStatusShow(),contessa1.cardStatusShow(),contessa2.cardStatusShow(),contessa3.cardStatusShow(),duke1.cardStatusShow(),duke2.cardStatusShow(),duke3.cardStatusShow()]
         """
         random.shuffle(self.cardDeck)
+        #print(self.cardDeck)
         #random.shuffle(deckid)
         #duke1.cardprint()
         #print(self.cardDeck)
         #print(deckid)
+        return self.cardDeck
         
     def takeCard(self):
+        #print("yeet")
         curcard = self.cardDeck[0]
         self.cardDeck.pop(0)
         return curcard

@@ -51,6 +51,10 @@ class Player():
     def ChallengePlayer(self):
         pass
 
+    def canDoRial(self):
+        print(self.__card1.cardIDShow())
+        print(self.__card2.cardIDShow())
+
     def DoCardAction(self):
         print("Please select wich Card you want to perform")
         print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")

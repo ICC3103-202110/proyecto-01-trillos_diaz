@@ -1,7 +1,7 @@
-#from game import Game
+from game import Game
 
 
-#def main():
+def main():
     #Game.gameplay()
     #card1 = Card(5)
     #duke1 = Duke(1)
@@ -11,7 +11,8 @@
     #j1 = Player(1,2,"uwu","awa")
     #j1.Getincome()
     #j1.SeeCoins()
-    #Game.gameplay(4)
+    gaem = Game(4)
+    gaem.startGame()
 
-#if __name__=="__main__":
-    #main()
+if __name__=="__main__":
+    main()

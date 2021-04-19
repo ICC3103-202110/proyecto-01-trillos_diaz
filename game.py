@@ -9,6 +9,8 @@ class Game():
 
     def startGame(self):
         Ddeck = Deck()
+        Ddeck.GenerateCards()
+        print(Ddeck)
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
@@ -28,6 +30,7 @@ class Game():
             player4.SeeCards()
         print("bruh")
         player1.SeeCoins()
-        player1.coins()
+        #player1.coins()
         player1.SeeCoins()
+        player1.canDoRial()
         

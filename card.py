@@ -9,9 +9,13 @@ class Card():
     def cardID(self):
         return self.__cardID
 
+
     
     def cardIDSet(self,newID):
         self.__cardID = newID
+
+    def cardIDShow(self):
+        return self.__cardID
 
     @property
     def cardStatus(self):
