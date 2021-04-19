@@ -1,4 +1,8 @@
-    
+from ambassador import Ambassador
+from assasin import Assasin
+from captain import Captain
+from contessa import Contessa
+from duke import Duke  
 
 class Player():
     def __init__(self,number,coins,card1,card2):
@@ -39,10 +43,29 @@ class Player():
     def ChallengePlayer(self):
         pass
 
+    def DoCardAction(self):
+        print("Please select wich Card you want to perform")
+        print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")
+        select = input()
+        if(select==1):
+            
+            pass
+        if(select==2):
+            
+            pass
+        if(select==3):
+            
+            pass
+        if(select==4):
+            
+            pass
+
+
 
     #def gameplay(self):
 
-
+j1 = Player(1,2,"uwu","ewe")
+j1.DoCardAction()
 
 
 
