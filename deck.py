@@ -1,5 +1,4 @@
 import random
-from card import Card
 from player import Player
 from ambassador import Ambassador
 from assasin import Assasin
