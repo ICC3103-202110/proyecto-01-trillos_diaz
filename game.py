@@ -1,5 +1,6 @@
 from deck import Deck
 from player import Player
+import random
 
 
 class Game():
@@ -22,6 +23,30 @@ class Game():
     #       return 3
     #    if(select==4):
     #       return 4
+    def counterAction(self,currPlaya):
+        counterPlayers = []
+        print("Does any player want to respond to this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+        counterPlayers = input().split(",")
+        print(counterPlayers)
+        if counterPlayers[0]=="":
+            return 0
+        elif self.playerCount > len(counterPlayers) >= 2:
+            print("picking random player from the players that decided to attack")
+            random.shuffle(counterPlayers)
+            playerattack = int(counterPlayers[0])
+            if playerattack == currPlaya:
+                print("bruh2")
+            else:
+                print("Player %d was chosen to do an action"%(playerattack))
+        elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+            playerattack = int(counterPlayers[0])
+            if playerattack == currPlaya:
+                print("bruh2")
+            else:
+                print("Player %d chose to do an action"%(playerattack))
+        else:
+            print("bruh1")
+            
 
     #def ChallengePlayer(self):
     #   pass
@@ -43,6 +68,7 @@ class Game():
             print("TAX = (1)\nASSASSINATE = (2)\nEXCHANGE = (3)\nSTEAL = (4)\n")
             select = int(input())
             if(select==1):
+                self.counterAction(playy)
                 return 1
                 
             if(select==2):
