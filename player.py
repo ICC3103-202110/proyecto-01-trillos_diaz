@@ -6,9 +6,19 @@ class Player():
         self.__coins = coins
         self.__card1 = card1
         self.__card2 = card2
+        self.isInGame = True
 
-    #def getCoins(self,coinAmmount):
-        #self.coins+=coinAmmount
+
+    @property
+    def isInGame(self):
+        return self.isInGame
+
+    def gameStatus(self):
+        print("yeet")
+        if self.__card1.cardStatus == "hidden" and self.__card2.cardStatus == "hidden":
+            self.isInGame = False
+
+
     @property
     def coins(self):
         return self.__coins
@@ -25,6 +35,8 @@ class Player():
     def GetForeignAid(self):
         self.__coins += 2
         print(self.coins)
+
+    
     
 
     def DoCoup(self):
@@ -63,6 +75,9 @@ class Player():
     def canDoRial(self):
         print(self.__card1.cardIDShow())
         print(self.__card2.cardIDShow())
+    
+    def CurrentPlayer(self):
+        return self.number
 
     def DoCardAction(self):
         print("Please select wich Card you want to perform")
