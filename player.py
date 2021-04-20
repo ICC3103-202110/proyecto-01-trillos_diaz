@@ -3,34 +3,34 @@ from card import Card
 class Player():
     def __init__(self,number,coins,card1,card2):
         self.number = number
-        self.coins = coins
+        self.__coins = coins
         self.__card1 = card1
         self.__card2 = card2
 
     #def getCoins(self,coinAmmount):
         #self.coins+=coinAmmount
-    #@property
-    #def coins(self):
-        #return self.coins
+    @property
+    def coins(self):
+        return self.__coins
     
     #@coins.setter
-    #def coins(self,coinAmmount):
-        #self.coins+=1
+    def coinsChange(self,coinAmmount):
+        self.__coins += coinAmmount
 
 
     def Getincome(self):
-        self.coins += 1
+        self.__coins += 1
         print(self.coins)
     
     def GetForeignAid(self):
-        self.coins += 2
+        self.__coins += 2
         print(self.coins)
     
 
     def DoCoup(self):
         num = int(self.number)
         print(num)
-        self.coins -= 7
+        self.__coins -= 7
         gamer=0
         while(gamer==0):
             gamer = input("Select which player you want to perform the COUP: ")
@@ -42,7 +42,7 @@ class Player():
                 return gamer
                 
     def SeeCoins(self):
-        print(self.coins)
+        print(self.__coins)
     
     def cardCoinCost(self,cardnum):
         if cardnum == 1:
