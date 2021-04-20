@@ -6,17 +6,18 @@ class Player():
         self.__coins = coins
         self.__card1 = card1
         self.__card2 = card2
-        self.isInGame = True
+        self.__isInGame = 1
 
 
     @property
     def isInGame(self):
-        return self.isInGame
+        return self.__isInGame
 
     def gameStatus(self):
         print("yeet")
+        print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "hidden" and self.__card2.cardStatus == "hidden":
-            self.isInGame = False
+            self.__isInGame = 0
 
 
     @property

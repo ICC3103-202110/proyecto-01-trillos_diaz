@@ -3,9 +3,8 @@ from player import Player
 
 
 class Game():
-    def __init__(self,playerCount,Players):
+    def __init__(self,playerCount):
         self.playerCount = playerCount
-        self.Players = Players
 
 
     #def DoCardAction(self):
@@ -33,11 +32,10 @@ class Game():
     #    else:
     #        return 0
     
-    def PlayerTurn(self):
-        gamer = self.Players
-        turn = gamer.CurrentPlayer()
-        print("Player number %d it's your turn"%(turn))
-        print("Player %d do you want to perform a Normal accion(Coin draw) or a card accion"%(turn))
+    def PlayerTurn(self,currPlaya):
+        playy = currPlaya+1
+        print("Player number %d it's your turn"%(playy))
+        print("Player %d do you want to perform a Normal accion(Coin draw) or a card accion"%(playy))
         print("CARD ACTION = (0)\nNORMAL ACTION = (1)")
         select =int(input())
         if(select==0):
@@ -67,57 +65,48 @@ class Game():
         Ddeck = Deck()
         Ddeck.GenerateCards()
         print(Ddeck)
+        Playerlist=[]
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
         player1.SeeCards()
+        Playerlist.append(player1)
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player2 = Player(2,2,card11,card22)
         player2.SeeCards()
+        Playerlist.append(player2)
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player3 = Player(3,2,card11,card22)
+        Playerlist.append(player3)
         player3.SeeCards()
         if self.playerCount == 4:
             card11 = Ddeck.takeCard()
             card22 = Ddeck.takeCard()
             player4 = Player(4,2,card11,card22)
+            Playerlist.append(player4)
             player4.SeeCards()
         print("bruh")
         #player1.SeeCoins()
         #player1.coins()
         #player1.SeeCoins()
-        player1.canDoRial()
-        player1.cardCoinCost(1)
-        
-        Playerlist=[]
-        Playerlist.append(player1)
-        Playerlist.append(player2)
-        Playerlist.append(player3)
-        p_alive1 = 1
-        p_alive2 = 1
-        p_alive3 = 1
-        if self.playerCount == 4:
-            Playerlist.append(player4)
-            p_alive4 = 1
-        else:
-            p_alive4 = 0
-
+        #player1.canDoRial()
+        #player1.cardCoinCost(1)
+        #print(player1.gameStatus())
         ActiveGame = 1
+        curPlaya = 1
+        print(Playerlist[curPlaya-1].isInGame)
         while(ActiveGame==1):
-            if(p_alive1==1):
-                current_game = Game(4,Playerlist[0])
-                Action = current_game.PlayerTurn()
-            if(p_alive2==1):
-                current_game = Game(4,Playerlist[1])
-                Action = current_game.PlayerTurn()
-            if(p_alive3==1):
-                current_game = Game(4,Playerlist[2])
-                Action = current_game.PlayerTurn()
-            if(p_alive4==1):
-                current_game = Game(4,Playerlist[3])
-                Action = current_game.PlayerTurn()
+            #print("a")
+            if(Playerlist[curPlaya-1].isInGame==1):
+                print("a")
+                Action = self.PlayerTurn(curPlaya-1)
+                ActiveGame = 0
+            else:
+                print("fucc")
+                ActiveGame = 0
+
 
 
 
@@ -131,9 +120,9 @@ class Game():
         #x=Playerlist[1].CurrentPlayer()
 
         #action = ewe.PlayerTurn()
-        print(action)
+        print(Action)
         
 
 
-ewe = Game(4,[])
-ewe.startGame()
+#ewe = Game(4,[])
+#ewe.startGame()
