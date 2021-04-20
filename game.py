@@ -6,6 +6,33 @@ class Game():
     def __init__(self,playerCount):
         self.playerCount = playerCount
 
+
+    #def DoCardAction(self):
+    #    print("Please select wich Card you want to perform")
+    #    print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")
+    #    select = int(input())
+    #   if(select==1):
+    #        return 1
+    #        
+    #   if(select==2):
+    #        return 2
+    #       
+    #    if(select==3):
+    #       
+    #       return 3
+    #    if(select==4):
+    #       return 4
+
+    #def ChallengePlayer(self):
+    #   pass
+    #    if(self.__card1==self.compare):
+    #       return 1
+    #   elif(self.__card2==self.compare):
+    #        return 1
+    #    else:
+    #        return 0
+
+
     def startGame(self):
         #start
         Ddeck = Deck()
@@ -34,5 +61,6 @@ class Game():
         #player1.SeeCoins()
         player1.canDoRial()
         player1.cardCoinCost(1)
+        return player1
         
         
