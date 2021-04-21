@@ -32,7 +32,7 @@ class Game():
             return 2
           
         if(actTodo==3):
-            print("aun no")
+            deckCards = [self.Ddeck]
             return 3
         if(actTodo==4):
             print("What player do you want to steal from?")

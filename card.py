@@ -2,17 +2,20 @@
 
 class Card():
 
-    def __init__(self,cardID,cardStatus,cardCost):
+    def __init__(self,cardID,cardStatus,cardCost,cardType):
         self.__cardID = cardID
         self.__cardStatus = cardStatus
         self.__cardCost = cardCost
+        self.__cardType = cardType
         
 
     @property
     def cardID(self):
         return self.__cardID
 
-
+    @property
+    def cardType(self):
+        return self.__cardType
     
     def cardIDSet(self,newID):
         self.__cardID = newID
