@@ -38,24 +38,42 @@ class Game():
                 print("bruh2")
             else:
                 print("Player %d was chosen to do an action"%(playerattack))
+                print("Player %d, what do you wish to do?\nCOUNTERATTACK = (0)\nCHALLENGE =(1)"%(playerattack))
+                whattodo = int(input())
+                if whattodo == 0:
+                    print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                elif whattodo == 1:
+                    print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
+                    self.challengePlayer(currPlaya,playerattack)
         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
             playerattack = int(counterPlayers[0])
             if playerattack == currPlaya:
                 print("bruh2")
             else:
                 print("Player %d chose to do an action"%(playerattack))
+                print("Player %d, what do you wish to do?\nCOUNTERATTACK = (0)\nCHALLENGE =(1)"%(playerattack))
+                whattodo = int(input())
+                if whattodo == 0:
+                    print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                elif whattodo == 1:
+                    print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
+                    self.challengePlayer(currPlaya,playerattack)
         else:
             print("bruh1")
             
 
-    #def ChallengePlayer(self):
-    #   pass
-    #    if(self.__card1==self.compare):
-    #       return 1
-    #   elif(self.__card2==self.compare):
-    #        return 1
-    #    else:
-    #        return 0
+    def challengePlayer(self,currPlaya,playerattack):
+        #print(self.Playerlist[currPlaya-1].canDoRial())
+        whatItDo = self.Playerlist[currPlaya-1].canDoRial()
+        if( whatItDo[0]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
+            print("La primera carta de este jugador permite hacer la accion")
+            return 1
+        elif(whatItDo[1]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
+            print("La segunda carta de este jugador permite hacer la accion")
+            return 1
+        else:
+            print("El jugador desafiado estaba bluffeando!!")
+            return 0
     
     def PlayerTurn(self,currPlaya):
         playy = currPlaya+1
@@ -68,16 +86,19 @@ class Game():
             print("TAX = (1)\nASSASSINATE = (2)\nEXCHANGE = (3)\nSTEAL = (4)\n")
             select = int(input())
             if(select==1):
+                self.currActionPlaying = 5
                 self.counterAction(playy)
                 return 1
                 
             if(select==2):
+                self.currActionPlaying = 2
                 return 2
             
             if(select==3):
-            
+                self.currActionPlaying = 1
                 return 3
             if(select==4):
+                self.currActionPlaying = 3
                 return 4
         elif(select==1):
             print("Please Select wich Normal Action you want to perform")
@@ -91,28 +112,29 @@ class Game():
         Ddeck = Deck()
         Ddeck.GenerateCards()
         print(Ddeck)
-        Playerlist=[]
+        self.Playerlist=[]
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
-        player1.SeeCards()
-        Playerlist.append(player1)
+        #player1.SeeCards()
+        #print(player1.canDoRial())
+        self.Playerlist.append(player1)
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player2 = Player(2,2,card11,card22)
-        player2.SeeCards()
-        Playerlist.append(player2)
+        #player2.SeeCards()
+        self.Playerlist.append(player2)
         card11 = Ddeck.takeCard()
         card22 = Ddeck.takeCard()
         player3 = Player(3,2,card11,card22)
-        Playerlist.append(player3)
-        player3.SeeCards()
+        self.Playerlist.append(player3)
+        #player3.SeeCards()
         if self.playerCount == 4:
             card11 = Ddeck.takeCard()
             card22 = Ddeck.takeCard()
             player4 = Player(4,2,card11,card22)
-            Playerlist.append(player4)
-            player4.SeeCards()
+            self.Playerlist.append(player4)
+            #player4.SeeCards()
         print("bruh")
         #player1.SeeCoins()
         #player1.coins()
@@ -122,10 +144,10 @@ class Game():
         #print(player1.gameStatus())
         ActiveGame = 1
         curPlaya = 1
-        print(Playerlist[curPlaya-1].isInGame)
+        print(self.Playerlist[curPlaya-1].isInGame)
         while(ActiveGame==1):
             #print("a")
-            if(Playerlist[curPlaya-1].isInGame==1):
+            if(self.Playerlist[curPlaya-1].isInGame==1):
                 print("a")
                 Action = self.PlayerTurn(curPlaya-1)
                 ActiveGame = 0

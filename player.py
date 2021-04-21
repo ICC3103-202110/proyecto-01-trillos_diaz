@@ -19,6 +19,11 @@ class Player():
         if self.__card1.cardStatus == "hidden" and self.__card2.cardStatus == "hidden":
             self.__isInGame = 0
 
+    def specCardStatus(self,cardToSee):
+        if cardToSee == 1:
+            return self.__card1.cardStatus
+        else:
+            return self.__card2.cardStatus
 
     @property
     def coins(self):
@@ -67,43 +72,22 @@ class Player():
         print(self.__card1)
         print(self.__card2)
 
-    def ChallengePlayer(self):
-        pass
-        #if():
 
-        #if():
 
     def canDoRial(self):
-        print(self.__card1.cardIDShow())
-        print(self.__card2.cardIDShow())
+        cardIds=[self.__card1.cardIDShow(),self.__card2.cardIDShow()]
+        return cardIds
+
     
     def CurrentPlayer(self):
         return self.number
 
-    def DoCardAction(self):
-        print("Please select wich Card you want to perform")
-        print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")
-        select = int(input())
-        if(select==1):
-            print("uwu")
-            return 1
-            
-        if(select==2):
-            return 2
-            
-        if(select==3):
-            
-            return 3
-        if(select==4):
-            return 4
+
             
 
 
 
-    #def gameplay(self):
 
-#j1 = Player(1,2,"uwu","ewe")
-#j1.DoCardAction()
 
 
 
