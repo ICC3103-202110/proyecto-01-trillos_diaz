@@ -42,6 +42,7 @@ class Game():
                 whattodo = int(input())
                 if whattodo == 0:
                     print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                    ##
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
                     self.challengePlayer(currPlaya,playerattack)
@@ -70,6 +71,7 @@ class Game():
             return 1
         elif(whatItDo[1]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
             print("La segunda carta de este jugador permite hacer la accion")
+
             return 1
         else:
             print("El jugador desafiado estaba bluffeando!!")
@@ -109,29 +111,29 @@ class Game():
 
     def startGame(self):
         #start
-        Ddeck = Deck()
-        Ddeck.GenerateCards()
-        print(Ddeck)
+        self.Ddeck = Deck()
+        self.Ddeck.GenerateCards()
+        print(self.Ddeck)
         self.Playerlist=[]
-        card11 = Ddeck.takeCard()
-        card22 = Ddeck.takeCard()
+        card11 = self.Ddeck.takeCard()
+        card22 = self.Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
         #player1.SeeCards()
         #print(player1.canDoRial())
         self.Playerlist.append(player1)
-        card11 = Ddeck.takeCard()
-        card22 = Ddeck.takeCard()
+        card11 = self.Ddeck.takeCard()
+        card22 = self.Ddeck.takeCard()
         player2 = Player(2,2,card11,card22)
         #player2.SeeCards()
         self.Playerlist.append(player2)
-        card11 = Ddeck.takeCard()
-        card22 = Ddeck.takeCard()
+        card11 = self.Ddeck.takeCard()
+        card22 = self.Ddeck.takeCard()
         player3 = Player(3,2,card11,card22)
         self.Playerlist.append(player3)
         #player3.SeeCards()
         if self.playerCount == 4:
-            card11 = Ddeck.takeCard()
-            card22 = Ddeck.takeCard()
+            card11 = self.Ddeck.takeCard()
+            card22 = self.Ddeck.takeCard()
             player4 = Player(4,2,card11,card22)
             self.Playerlist.append(player4)
             #player4.SeeCards()
