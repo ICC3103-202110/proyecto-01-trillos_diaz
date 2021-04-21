@@ -32,6 +32,7 @@ class Player():
         print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0
+            print("Player %d You lost all your influence"%(self.number))
 
     def cardStatusSet(self,cardToFlip):
         print("aqui llega la wea")
@@ -41,7 +42,7 @@ class Player():
         elif((cardToFlip == 2) and (self.__card2.cardStatus =="hidden")):
             self.__card2.cardStatusChange()
         else:
-            self.gameStatus()
+            self.gameStatus() 
         
         
 
