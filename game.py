@@ -8,21 +8,26 @@ class Game():
         self.playerCount = playerCount
 
 
-    #def DoCardAction(self):
-    #    print("Please select wich Card you want to perform")
-    #    print("1:(Tax)\n2:(Assassinate)\n3:(Exchange)\n4:(Steal)\n")
-    #    select = int(input())
-    #   if(select==1):
-    #        return 1
-    #        
-    #   if(select==2):
-    #        return 2
-    #       
-    #    if(select==3):
-    #       
-    #       return 3
-    #    if(select==4):
-    #       return 4
+    def DoCardAction(self,currPlaya,actTodo):
+        if(actTodo==1):
+            self.Playerlist[currPlaya-1].coinsChange(3)
+            return 1
+            
+        if(actTodo==2):
+            print("What player do you want to attack?")
+            AttackedPlaya =int(input())
+            whatCards = [self.Playerlist[AttackedPlaya-1].specCardStatus(1),self.Playerlist[AttackedPlaya-1].specCardStatus(1)]
+            if whatCards[0]== "hidden" and  whatCards[1]== "hidden":
+                self.Playerlist[AttackedPlaya-1].cardStatusSet(random.randint(0,2))
+            return 2
+          
+        if(actTodo==3):
+           
+           return 3
+        if(actTodo==4):
+           return 4
+
+
     def counterAction(self,currPlaya):
         counterPlayers = []
         
