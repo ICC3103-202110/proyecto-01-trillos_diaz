@@ -34,10 +34,11 @@ class Player():
             self.__isInGame = 0
 
     def cardStatusSet(self,cardToFlip):
+        print("aqui llega la wea")
         if cardToFlip == 1:
-            self.__card1.cardStatusChange
+            self.__card1.cardStatusChange()
         else:
-            self.__card2.cardStatusChange
+            self.__card2.cardStatusChange()
 
 
     def specCardStatus(self,cardToSee):
