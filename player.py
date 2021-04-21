@@ -21,6 +21,13 @@ class Player():
     def card2(self):
         return self.__card2
 
+    def printCardType(self,cardToSee):
+        if cardToSee == 1:
+            return self.__card1.cardType
+        else:
+            return self.__card2.cardType
+
+
     def setCard(self,cardToAdd,cardToReplace):
         if cardToReplace == 1:
             self.__card1 = cardToAdd

@@ -51,15 +51,15 @@ class Deck():
     def returnDeck(self):
         return self.cardDeck
 
-    def replaceCard(self,card2replace):
-        curcard = self.cardDeck[0]
-        self.cardDeck.pop(0)
+    def replaceCard(self,card2replace,cardWanted):
+        curcard = self.cardDeck[cardWanted-1]
+        self.cardDeck.pop(cardWanted-1)
         self.cardDeck.append(card2replace)
         print(curcard)
         return curcard
     
     def returnCardNo(self,card2see):
-        return self.cardDeck[card2see]
+        return self.cardDeck[card2see].cardType
     
     
 

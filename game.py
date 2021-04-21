@@ -32,7 +32,42 @@ class Game():
             return 2
           
         if(actTodo==3):
-            deckCards = [self.Ddeck]
+            print("Your 2 cards")
+            print("Pick which cards you want (a,b)")
+            print(self.Playerlist[currPlaya-1].printCardType(1), " (1)")
+            print(self.Playerlist[currPlaya-1].printCardType(2), " (2)")
+
+            print("Top 2 cards in the deck")
+            print(self.Ddeck.returnCardNo(0), " (3)")
+            print(self.Ddeck.returnCardNo(1), " (4)")
+            cardsWanted = input().split(",")
+            if int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 2:
+                print("You swap no cards cards")
+                self.Playerlist[currPlaya-1].SeeCards()
+            elif int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 3 and self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
+                
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
+                self.Playerlist[currPlaya-1].SeeCards()
+            elif int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 4 and self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,2),2)
+                self.Playerlist[currPlaya-1].SeeCards()
+            elif int(cardsWanted[0]) == 2 and int(cardsWanted[1]) == 3 and self.Playerlist[currPlaya-1].specCardStatus(1)== "hidden":
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                self.Playerlist[currPlaya-1].SeeCards()
+            elif int(cardsWanted[0]) == 2 and int(cardsWanted[1]) == 4 and self.Playerlist[currPlaya-1].specCardStatus(1)== "hidden":
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,2),1)
+                self.Playerlist[currPlaya-1].SeeCards()
+            elif int(cardsWanted[0]) == 3 and int(cardsWanted[1]) == 4:
+                if self.Playerlist[currPlaya-1].specCardStatus(1)== "hidden" or self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
+                    print("You swap both cards")
+                    self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                    self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                    self.Playerlist[currPlaya-1].SeeCards()
+                else:
+                    print("Please insert card numbers in order, or dont try to replace a shown card")
+            else:
+                print("Please insert card numbers in order, or dont try to replace a shown card")
+            
             return 3
         if(actTodo==4):
             print("What player do you want to steal from?")
@@ -105,7 +140,7 @@ class Game():
             print("The challenged player %d was not bluffing!!"%(currPlaya))
             #self.Playerlist[currPlaya-1].SeeCards()
             #print(self.Ddeck.returnDeck())
-            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1),1)
+            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
             cardLost = random.randint(1,2)
             #print(self.Ddeck.returnDeck())
             #self.Playerlist[currPlaya-1].SeeCards()
@@ -116,7 +151,7 @@ class Game():
             print("The challenged player %d was not bluffing!!"%(currPlaya))
             #self.Playerlist[currPlaya-1].SeeCards()
             #print(self.Ddeck.returnDeck())
-            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2),2)
+            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
             cardLost = random.randint(1,2)
             #print(self.Ddeck.returnDeck())
             #self.Playerlist[currPlaya-1].SeeCards()
