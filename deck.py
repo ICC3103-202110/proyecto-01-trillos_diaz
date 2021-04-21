@@ -58,6 +58,9 @@ class Deck():
         print(curcard)
         return curcard
     
+    def returnCardNo(self,card2see):
+        return self.cardDeck[card2see]
+    
     
 
     #def RandomizeCards(self):
