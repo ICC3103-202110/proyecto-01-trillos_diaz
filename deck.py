@@ -47,6 +47,9 @@ class Deck():
         curcard = self.cardDeck[0]
         self.cardDeck.pop(0)
         return curcard
+    
+    def returnDeck(self):
+        return self.cardDeck
 
     def replaceCard(self,card2replace):
         curcard = self.cardDeck[0]

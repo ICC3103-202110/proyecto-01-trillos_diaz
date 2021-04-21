@@ -24,11 +24,11 @@ class Card():
     def cardStatus(self):
         return self.__cardStatus
 
-    def cardStatusSet(self):
+    def cardStatusChange(self):
+        print(self.cardStatus)
         print("yeet")
         if self.__cardStatus == "hidden":
-
-            self.__cardStatus = "shown"
+            self.__cardStatus =="shown"
 
     def cardprint(self):
         print(self.__cardID)

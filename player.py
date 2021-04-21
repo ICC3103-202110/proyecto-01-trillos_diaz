@@ -13,11 +13,32 @@ class Player():
     def isInGame(self):
         return self.__isInGame
 
+    @property
+    def card1(self):
+        return self.__card1
+    
+    @property
+    def card2(self):
+        return self.__card2
+
+    def setCard(self,cardToAdd,cardToReplace):
+        if cardToReplace == 1:
+            self.__card1 = cardToAdd
+        else:
+            self.__card2 = cardToAdd
+
     def gameStatus(self):
         print("yeet")
         print(self.__card1.cardStatus)
-        if self.__card1.cardStatus == "hidden" and self.__card2.cardStatus == "hidden":
+        if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0
+
+    def cardStatusSet(self,cardToFlip):
+        if cardToFlip == 1:
+            self.__card1.cardStatusChange
+        else:
+            self.__card2.cardStatusChange
+
 
     def specCardStatus(self,cardToSee):
         if cardToSee == 1:

@@ -64,17 +64,35 @@ class Game():
             
 
     def challengePlayer(self,currPlaya,playerattack):
-        #print(self.Playerlist[currPlaya-1].canDoRial())
+        print(currPlaya)
+        print(self.Playerlist[currPlaya-1].canDoRial())
         whatItDo = self.Playerlist[currPlaya-1].canDoRial()
+        print(whatItDo)
         if( whatItDo[0]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
             print("La primera carta de este jugador permite hacer la accion")
+            self.Playerlist[currPlaya-1].SeeCards()
+            #print(self.Ddeck.returnDeck())
+            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1),1)
+            #print(self.Ddeck.returnDeck())
+            self.Playerlist[currPlaya-1].SeeCards()
+            self.Playerlist[playerattack].cardStatusSet(random.randint(0,2))
             return 1
         elif(whatItDo[1]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
             print("La segunda carta de este jugador permite hacer la accion")
-
+            self.Playerlist[currPlaya-1].SeeCards()
+            #print(self.Ddeck.returnDeck())
+            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2),2)
+            #print(self.Ddeck.returnDeck())
+            self.Playerlist[currPlaya-1].SeeCards()
+            self.Playerlist[playerattack].cardStatusSet(random.randint(0,2))
             return 1
         else:
             print("El jugador desafiado estaba bluffeando!!")
+            print(self.Playerlist[currPlaya-1].specCardStatus(1))
+            print(self.Playerlist[currPlaya-1].specCardStatus(2))
+            self.Playerlist[currPlaya-1].cardStatusSet(1)
+            print(self.Playerlist[currPlaya-1].specCardStatus(1))
+            print(self.Playerlist[currPlaya-1].specCardStatus(2))
             return 0
     
     def PlayerTurn(self,currPlaya):
