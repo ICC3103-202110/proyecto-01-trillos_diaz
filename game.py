@@ -11,6 +11,7 @@ class Game():
     def DoCardAction(self,currPlaya,actTodo):
         if(actTodo==1):
             self.Playerlist[currPlaya-1].coinsChange(3)
+            print("You got 3 coins from taxes!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
             return 1
             
         if(actTodo==2):
@@ -18,14 +19,37 @@ class Game():
             AttackedPlaya =int(input())
             whatCards = [self.Playerlist[AttackedPlaya-1].specCardStatus(1),self.Playerlist[AttackedPlaya-1].specCardStatus(1)]
             if whatCards[0]== "hidden" and  whatCards[1]== "hidden":
-                self.Playerlist[AttackedPlaya-1].cardStatusSet(random.randint(0,2))
+                cardLost = random.randint(1,2)
+                self.Playerlist[AttackedPlaya-1].cardStatusSet(cardLost)
+                print("Player %d lost his influence card number %d"%(AttackedPlaya,cardLost))
+            elif whatCards[0]== "hidden" and  whatCards[1]== "shown":
+                self.Playerlist[AttackedPlaya-1].cardStatusSet(1)
+                print("Player %d lost his influence card number 1"%(AttackedPlaya))
+            elif whatCards[0]== "shown" and  whatCards[1]== "hidden":
+                self.Playerlist[AttackedPlaya-1].cardStatusSet(2)
+                print("Player %d lost his influence card number 2"%(AttackedPlaya))
+            
             return 2
           
         if(actTodo==3):
-           
-           return 3
+            print("aun no")
+            return 3
         if(actTodo==4):
-           return 4
+            print("What player do you want to steal from?")
+            AttackedPlaya =int(input())
+            howManyCoins = self.Playerlist[AttackedPlaya-1].coins
+            if howManyCoins >=2:
+                print("You stole 2 coins from player %d\nYour current ammount of coins is %d"%(AttackedPlaya,self.Playerlist[currPlaya-1].coins))
+                print("Player %d has %d coins left!"%(AttackedPlaya,self.Playerlist[currPlaya-1].coins))
+            elif howManyCoins == 1:
+                print("Player %d has only 1 coin"%(AttackedPlaya))
+                print("You stole 1 coin from him\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                print("Player %d has no coins left!")
+            elif howManyCoins == 0:
+                print("Player %d did´t have any coins left!"%(AttackedPlaya))
+                print("So you wasted your turn and did not gain anything\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                
+            return 4
 
 
     def counterAction(self,currPlaya):
@@ -35,7 +59,7 @@ class Game():
         counterPlayers = input().split(",")
         print(counterPlayers)
         if counterPlayers[0]=="":
-            return 0
+            return 1
         elif self.playerCount > len(counterPlayers) >= 2:
             print("picking random player from the players that decided to attack")
             random.shuffle(counterPlayers)
@@ -78,28 +102,34 @@ class Game():
         whatItDo = self.Playerlist[currPlaya-1].canDoRial()
         print(whatItDo)
         if( whatItDo[0]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
-            print("La primera carta de este jugador permite hacer la accion")
+            print("The challenged player %d was not bluffing!!"%(currPlaya))
             #self.Playerlist[currPlaya-1].SeeCards()
             #print(self.Ddeck.returnDeck())
             self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1),1)
+            cardLost = random.randint(1,2)
             #print(self.Ddeck.returnDeck())
             #self.Playerlist[currPlaya-1].SeeCards()
-            self.Playerlist[playerattack].cardStatusSet(random.randint(0,2))
+            print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+            self.Playerlist[playerattack-1].cardStatusSet(cardLost)
             return 1
         elif(whatItDo[1]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
-            print("La segunda carta de este jugador permite hacer la accion")
+            print("The challenged player %d was not bluffing!!"%(currPlaya))
             #self.Playerlist[currPlaya-1].SeeCards()
             #print(self.Ddeck.returnDeck())
             self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2),2)
+            cardLost = random.randint(1,2)
             #print(self.Ddeck.returnDeck())
             #self.Playerlist[currPlaya-1].SeeCards()
-            self.Playerlist[playerattack].cardStatusSet(random.randint(0,2))
+            print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+            self.Playerlist[playerattack-1].cardStatusSet(cardLost)
             return 1
         else:
-            print("El jugador desafiado estaba bluffeando!!")
+            print("The challenged player %d was bluffing!!"%(currPlaya))
             #print(self.Playerlist[currPlaya-1].specCardStatus(1))
             #print(self.Playerlist[currPlaya-1].specCardStatus(2))
-            self.Playerlist[currPlaya-1].cardStatusSet(random.randint(0,2))
+            cardLost = random.randint(1,2)
+            self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
+            print("So he looses his influence card number %d"%(cardLost))
             #print(self.Playerlist[currPlaya-1].specCardStatus(1))
             #print(self.Playerlist[currPlaya-1].specCardStatus(2))
             return 0
@@ -120,6 +150,7 @@ class Game():
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
                     print("Hace la accion")
+                    self.DoCardAction(playy,1)
                 else:
                     print("No hace la accion")
                 return 1
@@ -129,6 +160,7 @@ class Game():
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
                     print("Hace la accion")
+                    self.DoCardAction(playy,2)
                 else:
                     print("No hace la accion")
                 return 2
@@ -138,6 +170,7 @@ class Game():
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
                     print("Hace la accion")
+                    self.DoCardAction(playy,3)
                 else:
                     print("No hace la accion")
                 return 3
@@ -146,6 +179,7 @@ class Game():
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
                     print("Hace la accion")
+                    self.DoCardAction(playy,4)
                 else:
                     print("No hace la accion")
                 return 4
