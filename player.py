@@ -35,10 +35,15 @@ class Player():
 
     def cardStatusSet(self,cardToFlip):
         print("aqui llega la wea")
-        if cardToFlip == 1:
+        if (cardToFlip == 1) and (self.__card1.cardStatus =="hidden"):
             self.__card1.cardStatusChange()
-        else:
+            
+        elif((cardToFlip == 2) and (self.__card2.cardStatus =="hidden")):
             self.__card2.cardStatusChange()
+        else:
+            self.gameStatus()
+        
+        
 
 
     def specCardStatus(self,cardToSee):
@@ -88,7 +93,7 @@ class Player():
         if cardnum == 1:
             print(self.__card1.cardCost)
         else:
-            print(self.__card1.cardCost)
+            print(self.__card2.cardCost)
 
     def SeeCards(self):
         print(self.__card1)
