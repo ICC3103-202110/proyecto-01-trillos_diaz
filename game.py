@@ -308,16 +308,25 @@ class Game():
         #print(player1.gameStatus())
         ActiveGame = 1
         curPlaya = 1
+        turnNum = 1
         print(self.Playerlist[curPlaya-1].isInGame)
         while(ActiveGame==1):
             #print("a")
             if(self.Playerlist[curPlaya-1].isInGame==1):
-                print("a")
+
+                print("Turn number %d\n"%(turnNum))
                 Action = self.PlayerTurn(curPlaya-1)
-                ActiveGame = 0
+                curPlaya+=1
+                if curPlaya>self.playerCount:
+                    curPlaya = 1
+                    turnNum+=1
+                
+
             else:
-                print("fucc")
-                ActiveGame = 0
+                curPlaya+=1
+                if curPlaya<self.playerCount:
+                    curPlaya = 1
+                    turnNum+=1
 
 
 
