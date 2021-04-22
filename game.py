@@ -107,7 +107,34 @@ class Game():
                 whattodo = int(input())
                 if whattodo == 0:
                     print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
-                    ##
+                    print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                    counterPlayers = input().split(",")
+                    print("h")
+                    print(counterPlayers)
+                    print("a")
+                    if counterPlayers[0]=="":
+                        print("e")
+                        return 0
+                    elif self.playerCount > len(counterPlayers) >= 2:
+                        print("ewe")
+                        print("picking random player from the players that decided to attack")
+                        random.shuffle(counterPlayers)
+                        playerchallenge = int(counterPlayers[0])
+                        if playerchallenge == currPlaya:
+                            print("bruh3")
+                        else:
+                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            return self.canDoAction
+                    elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                        print("uwu")
+                        playerchallenge = int(counterPlayers[0])
+                        if playerchallenge == currPlaya:
+                            print("bruh3")
+                        else:
+                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            return self.canDoAction
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
                     self.canDoAction = self.challengePlayer(currPlaya,playerattack)
@@ -125,12 +152,21 @@ class Game():
                     print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                     counterPlayers = input().split(",")
                     print(counterPlayers)
+                    print("hdjashdj")
                     if counterPlayers[0]=="":
                         return 0
                     elif self.playerCount > len(counterPlayers) >= 2:
                         print("picking random player from the players that decided to attack")
                         random.shuffle(counterPlayers)
-                        playerattack = int(counterPlayers[0])
+                        playerchallenge = int(counterPlayers[0])
+                        if playerattack == currPlaya:
+                            print("bruh3")
+                        else:
+                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            return self.canDoAction
+                            
+                
                         ###uwu awa seguir aca
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
