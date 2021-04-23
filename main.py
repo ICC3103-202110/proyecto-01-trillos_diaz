@@ -5,7 +5,12 @@ import random
 def main():
     asking = 1
     while asking == 1:
-        print("How many players do you want?")
+        print("====================================")
+        print("                COUP                 ")
+        print("             S.D.T soft              ")
+        print("                2021              ")
+        print("====================================")
+        print("How many people want to play?")
         playaCount = int(input())
         if 3 <= playaCount <= 4:
             gaem = Game(playaCount)
