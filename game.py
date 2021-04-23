@@ -189,12 +189,25 @@ class Game():
         actionToChall = self.currActionPlaying    
         print(self.Playerlist[currPlaya-1].canDoRial())
         whatItDo = self.Playerlist[currPlaya-1].canDoRial()
+        whatCanLooseCu = [self.Playerlist[currPlaya-1].specCardStatus(1),self.Playerlist[currPlaya-1].specCardStatus(2)]
+        whatCanLooseAt = [self.Playerlist[playerattack-1].specCardStatus(1),self.Playerlist[playerattack-1].specCardStatus(2)]
+        if whatCanLooseAt[0] !="hidden":
+            cardLost = 2
+        elif whatCanLooseAt[1] != "hidden":
+            cardLost = 1
+        else:
+            cardLostC = random.randint(1,2) 
+        if whatCanLooseCu[0] !="hidden":
+            cardLostC = 2
+        elif whatCanLooseCu[1] != "hidden":
+            cardLostC = 1   
+        else:
+            cardLostC = random.randint(1,2) 
         print(whatItDo)
         if mode == 1:
             if( whatItDo[0]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
-                cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
@@ -202,15 +215,13 @@ class Game():
             elif(whatItDo[1]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
-                cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
                 return 1
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
-                cardLost = random.randint(1,2)
-                self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
+                self.Playerlist[currPlaya-1].cardStatusSet(cardLostC)
                 print("So he loses his influence card number %d"%(cardLost))
                 self.Playerlist[currPlaya-1].gameStatus()
                 return 0
@@ -232,11 +243,10 @@ class Game():
             print(str(whatItDo[0]))
             print(str(whatItDo[1]))
             if actiontoChallS.find( str(whatItDo[0])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
-                print("estaweafunciona1")
+                #print("estaweafunciona1")
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
                 
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
-                cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
@@ -244,10 +254,9 @@ class Game():
                 self.Playerlist[playerattack-1].gameStatus()
                 return 1
             elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
-                print("estaweafunciona2")
+                #print("estaweafunciona2")
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
-                cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
@@ -255,11 +264,10 @@ class Game():
                 self.Playerlist[playerattack-1].gameStatus()
                 return 1
             else:
-                print("estaweafunciona3")
+                #print("estaweafunciona3")
                 print("The challenged player %d was bluffing!!"%(currPlaya))
-                cardLost = random.randint(1,2)
-                self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
-                print("So he looses his influence card number %d"%(cardLost))
+                self.Playerlist[currPlaya-1].cardStatusSet(cardLostC)
+                print("So he looses his influence card number %d"%(cardLostC))
                 self.Playerlist[currPlaya-1].gameStatus()
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
@@ -285,8 +293,10 @@ class Game():
                 if(playerToCoup==playy or playerToCoup<0 or playerToCoup>len(self.Playerlist)):
                     loop = 0
                     print("You can't select that, Select again")
-                elif(playerToCoup<0 and playerToCoup>len(self.Playerlist)):
+                elif(playerToCoup>0 and playerToCoup<len(self.Playerlist)):
                     loop = 1
+                else:
+                    print("bruh")
             cardLost = random.randint(1,2)
             print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
             self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
@@ -312,7 +322,7 @@ class Game():
                     print("picking random player from the players that decided to attack")
                     random.shuffle(counterPlayers)
                     playerchallenge = int(counterPlayers[0])
-                    if playerchallenge == currPlaya:
+                    if playerchallenge == playy:
                         playerchallenge = int(counterPlayers[1])
                     elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         self.canDoAction = 0
@@ -321,7 +331,7 @@ class Game():
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                     playerchallenge = int(counterPlayers[0])
-                    if playerchallenge == currPlaya:
+                    if playerchallenge == playy:
                         self.canDoAction = 0
                     elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         self.canDoAction = 0
@@ -362,7 +372,7 @@ class Game():
                     print("picking random player from the players that decided to attack")
                     random.shuffle(counterPlayers)
                     playerchallenge = int(counterPlayers[0])
-                    if playerchallenge == currPlaya:
+                    if playerchallenge == playy:
                         playerchallenge = int(counterPlayers[1])
                     elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         self.canDoAction = 0
@@ -371,7 +381,7 @@ class Game():
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                     playerchallenge = int(counterPlayers[0])
-                    if playerchallenge == currPlaya:
+                    if playerchallenge == playy:
                         self.canDoAction = 0
                     elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         self.canDoAction = 0
@@ -413,7 +423,7 @@ class Game():
                     print("picking random player from the players that decided to attack")
                     random.shuffle(counterPlayers)
                     playerattack = int(counterPlayers[0])
-                    if playerattack == currPlaya:
+                    if playerattack == playy:
                         playerattack = int(counterPlayers[1])
                     elif self.Playerlist[playerattack-1].isInGame == 0:
                         self.canDoAction = 1
@@ -428,7 +438,7 @@ class Game():
                             print("picking random player from the players that decided to attack")
                             random.shuffle(counterPlayers)
                             playerchallenge = int(counterPlayers[0])
-                            if playerchallenge == currPlaya:
+                            if playerchallenge == playy:
                                 playerchallenge = int(counterPlayers[1])
                             elif self.Playerlist[playerchallenge-1].isInGame == 0:
                                 self.canDoAction = 0
@@ -437,7 +447,7 @@ class Game():
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                             playerchallenge = int(counterPlayers[0])
-                            if playerchallenge == currPlaya:
+                            if playerchallenge == playy:
                                 self.canDoAction = 0
                             elif self.Playerlist[playerchallenge-1].isInGame == 0:
                                 self.canDoAction = 0
@@ -448,8 +458,8 @@ class Game():
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
 
                     playerattack = int(counterPlayers[0])
-                    if playerattack == currPlaya:
-                        playerattack = int(counterPlayers[1])
+                    if playerattack == playy:
+                        self.canDoAction = 0
                     elif self.Playerlist[playerattack-1].isInGame == 0:
                         self.canDoAction = 1
                     else:
@@ -463,7 +473,7 @@ class Game():
                             print("picking random player from the players that decided to attack")
                             random.shuffle(counterPlayers)
                             playerchallenge = int(counterPlayers[0])
-                            if playerchallenge == currPlaya:
+                            if playerchallenge == playy:
                                 playerchallenge = int(counterPlayers[1])
                             elif self.Playerlist[playerchallenge-1].isInGame == 0:
                                 self.canDoAction = 0
@@ -472,7 +482,7 @@ class Game():
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                             playerchallenge = int(counterPlayers[0])
-                            if playerchallenge == currPlaya:
+                            if playerchallenge == playy:
                                 self.canDoAction = 0
                             elif self.Playerlist[playerchallenge-1].isInGame == 0:
                                 self.canDoAction = 0
