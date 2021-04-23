@@ -299,6 +299,7 @@ class Game():
                     print("bruh")
             cardLost = random.randint(1,2)
             print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
+            self.savelog("Player %d COUP Player %d"%(playy,playerToCoup))
             self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
             self.Playerlist[playerToCoup-1].gameStatus()
             self.Playerlist[currPlaya].coinsChange(-7)
@@ -313,6 +314,7 @@ class Game():
             select = int(input())
             if(select==1):
                 self.currActionPlaying = 5
+                self.savelog("Player %d use TAX action"%(playy))
                 print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                 counterPlayers = input().split(",")
                 print(counterPlayers)
@@ -328,6 +330,7 @@ class Game():
                         self.canDoAction = 0
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.savelog("Player %d Challenge Player %d TAX"%(playerchallenge,playy))
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                     playerchallenge = int(counterPlayers[0])
@@ -337,6 +340,7 @@ class Game():
                         self.canDoAction = 0
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.savelog("Player %d Challenge Player %d TAX"%(playerchallenge,playy))
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                         #return self.canDoAction
                 if self.canDoAction ==1:
@@ -411,6 +415,7 @@ class Game():
             if select==1:
                 self.Playerlist[currPlaya].coinsChange(1)
                 print("You got 1 coins from income!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                self.savelog("Player %d got 1 coin with INCOME"%(playy))
                 return 5
             elif select == 2:
                 self.currActionPlaying = 6
@@ -505,6 +510,7 @@ class Game():
                     playerToCoup = int(input())
                     cardLost = random.randint(1,2)
                     print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
+                    self.savelog("Player %d COUP Player %d"%(playy,playerToCoup))
                     self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
                     self.Playerlist[playerToCoup-1].gameStatus()
                     self.Playerlist[currPlaya].coinsChange(-7)
@@ -512,21 +518,23 @@ class Game():
                     return 6
                 else:
                     print("You don´t have enough coins to do this action")
+    def loglist(self):
+        self.totalLog.append(self.Log)
 
     def savelog(self,action):
         self.Log.append(action)
 
     def printlog(self):
-        for i in range(len(self.Log)):
-            print(self.Log[i])       
+        for i in range(len(self.totalLog)):
+            for j in range(len(self.totalLog[i])):
+                print(self.totalLog[i][j])       
 
     def startGame(self):
         self.playersLeft = []
         #start
         self.Log=[]
-        #self.savelog("ewe")
-        #self.savelog("fgfg")
-        #self.printlog()
+        self.totalLog=[]
+
         self.Ddeck = Deck()
         self.Ddeck.GenerateCards()
         self.Playerlist=[]
@@ -556,6 +564,7 @@ class Game():
         ActiveGame = 1
         curPlaya = 1
         turnNum = 1
+        logturns = 0
         #print(len(self.Playerlist))
         while(ActiveGame==1):
             if  self.playersLeft != 1:
@@ -563,6 +572,7 @@ class Game():
                     print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
                     print("Turn number %d\n"%(turnNum))
                     self.PlayerTurn(curPlaya-1)
+                    #self.printlog()
                     isBruh = 0
                     while isBruh < self.playerCount:
                         if self.Playerlist[isBruh].isInGame==0:
@@ -590,19 +600,47 @@ class Game():
                                 winna = 4
                             print("Player %d has won!"%(winna))
                             ActiveGame = 0
-
+                    logturns+=1
                     curPlaya+=1
                     
                     if curPlaya>self.playerCount:
                         curPlaya = 1
+                        self.loglist()
+                        self.Log = []
+                        curPlaya = 1
+                        print("\n")
+                        print("Do you want to see the logs of the last rounds?")
+                        print("Yes = (0)\nNo = (1)")
+                        answer= input()
+                        if int(answer) == 0:
+                            print("_______LOGS_______")
+                            self.printlog()
+                        if logturns >= 8:
+                            logturns -= 4
+                            self.totalLog.pop(0)
                         turnNum+=1
+                        print("\n")
                     
 
                 else:
                     curPlaya+=1
+                    logturns+=1
                     if curPlaya>self.playerCount:
+                        self.loglist()
+                        self.Log = []
                         curPlaya = 1
+                        print("\n")
+                        print("Do you want to see the logs of the last plays?")
+                        print("Yes = (0)\nNo = (1)")
+                        answer= input()
+                        if int(answer) == 0:
+                            print("_______LOGS_______")
+                            self.printlog()
+                        if logturns > 8:
+                            logturns -= 4
+                            self.totalLog.pop(0)
                         turnNum+=1
+                        print("\n")
 
 
 
