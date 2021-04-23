@@ -17,7 +17,7 @@ class Game():
         if(actTodo==2):
             print("What player do you want to attack?")
             AttackedPlaya =int(input())
-            whatCards = [self.Playerlist[AttackedPlaya-1].specCardStatus(1),self.Playerlist[AttackedPlaya-1].specCardStatus(1)]
+            whatCards = [self.Playerlist[AttackedPlaya-1].specCardStatus(1),self.Playerlist[AttackedPlaya-1].specCardStatus(2)]
             print(whatCards)
             if whatCards[0]== "hidden" and  whatCards[1]== "hidden":
                 cardLost = random.randint(1,2)
@@ -261,7 +261,7 @@ class Game():
                 cardLost = random.randint(1,2)
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
                 print("So he looses his influence card number %d"%(cardLost))
-                self.Playerlist[playerattack-1].gameStatus
+                self.Playerlist[currPlaya-1].gameStatus
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 return 0
@@ -435,18 +435,3 @@ class Game():
 
 
 
-        #for i in range(2):
-        #    print(i)
-        #    ewe = Game(4,Playerlist[i])
-        #    action = ewe.PlayerTurn()
-        
-        
-        #x=Playerlist[1].CurrentPlayer()
-
-        #action = ewe.PlayerTurn()
-        #print(Action)
-        
-
-
-#ewe = Game(4,[])
-#ewe.startGame()

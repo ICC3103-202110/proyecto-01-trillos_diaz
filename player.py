@@ -35,11 +35,13 @@ class Player():
             self.__card2 = cardToAdd
 
     def gameStatus(self):
-        #print("yeet")
-        print(self.__card1.cardStatus)
+        print("testea1")
+        #print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0
-            print("Player %d You lost all your influence"%(self.number))
+            print("Player %d You lost all your influence!"%(self.number))
+        else:
+            print("Player %d Is still in game!"%(self.number))
 
     def cardStatusSet(self,cardToFlip):
         print("aqui llega la wea")
