@@ -271,6 +271,23 @@ class Game():
         playy = currPlaya+1
         self.canDoAction = 1
         print("Player number %d it's your turn"%(playy))
+        ccoins = 0
+        while ccoins < self.playerCount:
+            print("Player %d´s coins: %d"%(ccoins+1,self.Playerlist[ccoins].coins))
+            ccoins +=1
+        print("Your cards:        %s , %s"%(self.Playerlist[currPlaya].printCardType(1),self.Playerlist[currPlaya].printCardType(2)))
+        print("Your cards status: %s , %s"%(self.Playerlist[currPlaya].specCardStatus(1),self.Playerlist[currPlaya].specCardStatus(2)))
+        if self.Playerlist[currPlaya].coins >= 10:
+            print("You automatically do a coup!")
+            print("What player do you want to do a coup on?")
+            playerToCoup = int(input())
+            cardLost = random.randint(1,2)
+            print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
+            self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
+            self.Playerlist[playerToCoup-1].gameStatus
+            self.Playerlist[currPlaya].coinsChange(-7)
+            print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
+            return 6
         print("Player %d do you want to perform a Normal accion(Coin draw) or a card accion"%(playy))
         print("CARD ACTION = (0)\nNORMAL ACTION = (1)")
         select =int(input())
@@ -282,27 +299,32 @@ class Game():
                 self.currActionPlaying = 5
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
-                    print("Hace la accion")
+                    print("You manage to do the action")
                     self.DoCardAction(playy,1)
                 else:
                     print("No hace la accion")
                 return 1
                 
             if(select==2):
-                self.currActionPlaying = 2
-                self.canDoAction = self.counterAction(playy)
-                if self.canDoAction ==1:
-                    print("Hace la accion")
-                    self.DoCardAction(playy,2)
+                if self.Playerlist[currPlaya].coins >= 3:
+                    self.currActionPlaying = 2
+                    self.canDoAction = self.counterAction(playy)
+                    if self.canDoAction ==1:
+                        print("You manage to do the action")
+                        self.DoCardAction(playy,2)
+                        self.Playerlist[currPlaya].coinsChange(-3)
+                        print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
+                    else:
+                        print("No hace la accion")
+                    return 2
                 else:
-                    print("No hace la accion")
-                return 2
+                    print("You don´t have enough coins to do this action")
             
             if(select==3):
                 self.currActionPlaying = 1
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
-                    print("Hace la accion")
+                    print("You manage to do the action")
                     self.DoCardAction(playy,3)
                 else:
                     print("No hace la accion")
@@ -321,7 +343,7 @@ class Game():
             print("1:INCOME= (1)\n2:FOREING AID= (2)\n3:COUP = (3)")
             select = int(input())
             if select==1:
-                self.Playerlist[currPlaya-1].coinsChange(1)
+                self.Playerlist[currPlaya].coinsChange(1)
                 print("You got 1 coins from income!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
                 return 5
             elif select == 2:
@@ -329,20 +351,26 @@ class Game():
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
                     print("Hace la accion")
-                    print("You got 2 coins from from a foreing country!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                    self.Playerlist[currPlaya].coinsChange(2)
+                    print("You got 2 coins from from a foreing country!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
                 else:
                     print("No hace la accion")
                 return 6
 
 
             elif select == 3:
-                print("What player do you want to do a coup on?")
-                playerToCoup = int(input())
-                cardLost = random.randint(1,2)
-                print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
-                self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
-                self.Playerlist[playerToCoup-1].gameStatus
-                return 6
+                if self.Playerlist[currPlaya].coins >= 7:
+                    print("What player do you want to do a coup on?")
+                    playerToCoup = int(input())
+                    cardLost = random.randint(1,2)
+                    print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
+                    self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
+                    self.Playerlist[playerToCoup-1].gameStatus
+                    self.Playerlist[currPlaya].coinsChange(-7)
+                    print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
+                    return 6
+                else:
+                    print("You don´t have enough coins to do this action")
 
             
 
@@ -350,7 +378,7 @@ class Game():
         #start
         self.Ddeck = Deck()
         self.Ddeck.GenerateCards()
-        print(self.Ddeck)
+        #print(self.Ddeck)
         self.Playerlist=[]
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
@@ -374,7 +402,7 @@ class Game():
             player4 = Player(4,2,card11,card22)
             self.Playerlist.append(player4)
             #player4.SeeCards()
-        print("bruh")
+        #print("bruh")
         #player1.SeeCoins()
         #player1.coins()
         #player1.SeeCoins()
@@ -384,7 +412,7 @@ class Game():
         ActiveGame = 1
         curPlaya = 1
         turnNum = 1
-        print(self.Playerlist[curPlaya-1].isInGame)
+        #print(self.Playerlist[curPlaya-1].isInGame)
         while(ActiveGame==1):
             #print("a")
             if(self.Playerlist[curPlaya-1].isInGame==1):

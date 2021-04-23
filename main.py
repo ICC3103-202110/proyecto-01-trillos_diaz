@@ -3,25 +3,17 @@ from player import Player
 import random
 
 def main():
-    #Game.gameplay()
-    #card1 = Card(5)
-    #duke1 = Duke(1)
-    #print(card1)
-    #card1.cardprint()
-    #duke1.cardprint()
-    #j1 = Player(1,2,"uwu","awa")
-    #j1.Getincome()
-    #j1.SeeCoins()
-    gaem = Game(4)
-    gaem.startGame()
-    #j1 = Player(1,2,3,2)
-    #a = j1.DoCardAction()
-    
-    #players = input("Añadir jugador en 1,2,3,4: ")
-    #x = players.split(",")
-    #random.shuffle(x)
-    #print(x[0])
-    #selec = input("Desafiar (1) , Challenge (2)")
+    asking = 1
+    while asking == 1:
+        print("How many players do you want?")
+        playaCount = int(input())
+        if 3 <= playaCount <= 4:
+            gaem = Game(playaCount)
+            gaem.startGame()
+            asking = 0
+        else:
+            print("Please input a valid number (3,4)")
+
     
 
 if __name__=="__main__":
