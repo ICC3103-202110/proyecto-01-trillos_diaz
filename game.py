@@ -354,7 +354,93 @@ class Game():
                 return 5
             elif select == 2:
                 self.currActionPlaying = 6
-                self.canDoAction = self.counterAction(playy)
+                print("Does any player want to Counterattack this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                counterPlayers = input().split(",")
+                print(counterPlayers)
+                if counterPlayers[0]=="":
+                    self.canDoAction == 1
+                elif self.playerCount > len(counterPlayers) >= 2:
+                    print("picking random player from the players that decided to attack")
+                    random.shuffle(counterPlayers)
+                    playerattack = int(counterPlayers[0])
+                    if playerattack == currPlaya:
+                        playerattack = int(counterPlayers[1])
+                    elif self.Playerlist[playerattack-1].isInGame == 0:
+                        self.canDoAction = 1
+                    else:
+                        print("Player %d CounterAttack Player %d"%(playerattack,currPlaya+1))
+                        print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                        counterPlayers = input().split(",")
+                        print(counterPlayers)
+                        if counterPlayers[0]=="":
+                            self.canDoAction == 1
+                        elif self.playerCount > len(counterPlayers) >= 2:
+                            print("picking random player from the players that decided to attack")
+                            random.shuffle(counterPlayers)
+                            playerchallenge = int(counterPlayers[0])
+                            if playerchallenge == currPlaya:
+                                playerchallenge = int(counterPlayers[1])
+                            elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                                self.canDoAction = 0
+                            else:
+                                print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                        elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                            playerchallenge = int(counterPlayers[0])
+                            if playerchallenge == currPlaya:
+                                self.canDoAction = 0
+                            elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                                self.canDoAction = 0
+                            else:
+                                print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                                #return self.canDoAction
+                elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+
+                    playerattack = int(counterPlayers[0])
+                    if playerattack == currPlaya:
+                        playerattack = int(counterPlayers[1])
+                    elif self.Playerlist[playerattack-1].isInGame == 0:
+                        self.canDoAction = 1
+                    else:
+                        print("Player %d CounterAttack Player %d"%(playerattack,currPlaya+1))
+                        print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                        counterPlayers = input().split(",")
+                        print(counterPlayers)
+                        if counterPlayers[0]=="":
+                            self.canDoAction == 1
+                        elif self.playerCount > len(counterPlayers) >= 2:
+                            print("picking random player from the players that decided to attack")
+                            random.shuffle(counterPlayers)
+                            playerchallenge = int(counterPlayers[0])
+                            if playerchallenge == currPlaya:
+                                playerchallenge = int(counterPlayers[1])
+                            elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                                self.canDoAction = 0
+                            else:
+                                print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                        elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                            playerchallenge = int(counterPlayers[0])
+                            if playerchallenge == currPlaya:
+                                self.canDoAction = 0
+                            elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                                self.canDoAction = 0
+                            else:
+                                print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+
+
+                    #playerattack = int(counterPlayers[0])
+                    #if playerattack == currPlaya:
+                    #   self.canDoAction = 1
+                    #elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                    #    self.canDoAction = 1
+                    #else:
+                    #    print("Player %d challenges Player %d!!"%(playerchallenge,currPlaya+1))
+                    #    self.canDoAction = self.challengePlayer(currPlaya,playerchallenge,2)
+                    #    return self.canDoAction
+
                 if self.canDoAction ==1:
                     print("Hace la accion")
                     self.Playerlist[currPlaya].coinsChange(2)
