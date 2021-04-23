@@ -35,7 +35,7 @@ class Player():
             self.__card2 = cardToAdd
 
     def gameStatus(self):
-        print("yeet")
+        #print("yeet")
         print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0

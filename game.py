@@ -18,16 +18,21 @@ class Game():
             print("What player do you want to attack?")
             AttackedPlaya =int(input())
             whatCards = [self.Playerlist[AttackedPlaya-1].specCardStatus(1),self.Playerlist[AttackedPlaya-1].specCardStatus(1)]
+            print(whatCards)
             if whatCards[0]== "hidden" and  whatCards[1]== "hidden":
                 cardLost = random.randint(1,2)
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(cardLost)
                 print("Player %d lost his influence card number %d"%(AttackedPlaya,cardLost))
+                self.Playerlist[AttackedPlaya-1].gameStatus
+                print(whatCards)
             elif whatCards[0]== "hidden" and  whatCards[1]== "shown":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(1)
                 print("Player %d lost his influence card number 1"%(AttackedPlaya))
+                self.Playerlist[AttackedPlaya-1].gameStatus
             elif whatCards[0]== "shown" and  whatCards[1]== "hidden":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(2)
                 print("Player %d lost his influence card number 2"%(AttackedPlaya))
+                self.Playerlist[AttackedPlaya-1].gameStatus
             
             return 2
           
@@ -73,11 +78,15 @@ class Game():
             AttackedPlaya =int(input())
             howManyCoins = self.Playerlist[AttackedPlaya-1].coins
             if howManyCoins >=2:
+                self.Playerlist[currPlaya-1].coinsChange(2)
                 print("You stole 2 coins from player %d\nYour current ammount of coins is %d"%(AttackedPlaya,self.Playerlist[currPlaya-1].coins))
-                print("Player %d has %d coins left!"%(AttackedPlaya,self.Playerlist[currPlaya-1].coins))
+                self.Playerlist[AttackedPlaya-1].coinsChange(-2)
+                print("Player %d has %d coins left!"%(AttackedPlaya,self.Playerlist[AttackedPlaya-1].coins))
             elif howManyCoins == 1:
                 print("Player %d has only 1 coin"%(AttackedPlaya))
+                self.Playerlist[currPlaya-1].coinsChange(1)
                 print("You stole 1 coin from him\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                self.Playerlist[AttackedPlaya-1].coinsChange(-1)
                 print("Player %d has no coins left!")
             elif howManyCoins == 0:
                 print("Player %d did´t have any coins left!"%(AttackedPlaya))
@@ -152,7 +161,7 @@ class Game():
                     print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                     counterPlayers = input().split(",")
                     print(counterPlayers)
-                    print("hdjashdj")
+                    #print("hdjashdj")
                     if counterPlayers[0]=="":
                         return 0
                     elif self.playerCount > len(counterPlayers) >= 2:
@@ -189,6 +198,7 @@ class Game():
                 cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                self.Playerlist[playerattack-1].gameStatus
                 return 1
             elif(whatItDo[1]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
@@ -196,12 +206,14 @@ class Game():
                 cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                self.Playerlist[playerattack-1].gameStatus
                 return 1
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
                 cardLost = random.randint(1,2)
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
-                print("So he looses his influence card number %d"%(cardLost))
+                print("So he loses his influence card number %d"%(cardLost))
+                self.Playerlist[currPlaya-1].gameStatus
                 return 0
         elif mode == 2:
             
@@ -230,6 +242,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                self.Playerlist[playerattack-1].gameStatus
                 return 1
             elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
                 print("estaweafunciona2")
@@ -240,6 +253,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                self.Playerlist[playerattack-1].gameStatus
                 return 1
             else:
                 print("estaweafunciona3")
@@ -247,6 +261,7 @@ class Game():
                 cardLost = random.randint(1,2)
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
                 print("So he looses his influence card number %d"%(cardLost))
+                self.Playerlist[playerattack-1].gameStatus
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 return 0
@@ -303,9 +318,32 @@ class Game():
                 return 4
         elif(select==1):
             print("Please Select wich Normal Action you want to perform")
-            print("INCOME= (1)\n2:FOREING AID= (2)\n3:COUP = (3)")
+            print("1:INCOME= (1)\n2:FOREING AID= (2)\n3:COUP = (3)")
             select = int(input())
-            #if(select==1):
+            if select==1:
+                self.Playerlist[currPlaya-1].coinsChange(1)
+                print("You got 1 coins from income!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                return 5
+            elif select == 2:
+                self.currActionPlaying = 6
+                self.canDoAction = self.counterAction(playy)
+                if self.canDoAction ==1:
+                    print("Hace la accion")
+                    print("You got 2 coins from from a foreing country!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                else:
+                    print("No hace la accion")
+                return 6
+
+
+            elif select == 3:
+                print("What player do you want to do a coup on?")
+                playerToCoup = int(input())
+                cardLost = random.randint(1,2)
+                print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
+                self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
+                self.Playerlist[playerToCoup-1].gameStatus
+                return 6
+
             
 
     def startGame(self):
