@@ -39,7 +39,9 @@ class Player():
         #print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0
+            self.__coins = 0
             print("Player %d You lost all your influence!"%(self.number))
+
         else:
             print("Player %d Is still in game!"%(self.number))
 
@@ -52,7 +54,6 @@ class Player():
             self.__card2.cardStatusChange()
         else:
             self.gameStatus() 
-        
         
 
 
@@ -71,31 +72,6 @@ class Player():
         self.__coins += coinAmmount
 
 
-    def Getincome(self):
-        self.__coins += 1
-        print(self.coins)
-    
-    def GetForeignAid(self):
-        self.__coins += 2
-        print(self.coins)
-
-    
-    
-
-    def DoCoup(self):
-        num = int(self.number)
-        print(num)
-        self.__coins -= 7
-        gamer=0
-        while(gamer==0):
-            gamer = input("Select which player you want to perform the COUP: ")
-            print(gamer)
-            if(gamer==num):
-                print("Please select again a Player")
-                gamer = 0
-            elif(gamer!=0):
-                return gamer
-                
     def SeeCoins(self):
         print(self.__coins)
     
@@ -104,11 +80,10 @@ class Player():
             print(self.__card1.cardCost)
         else:
             print(self.__card2.cardCost)
-
+        
     def SeeCards(self):
         print(self.__card1)
         print(self.__card2)
-
 
 
     def canDoRial(self):

@@ -161,17 +161,21 @@ class Game():
                     print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
                     print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                     counterPlayers = input().split(",")
+                    random.shuffle(counterPlayers)
+                    playerchallenge = int(counterPlayers[0])
                     print(counterPlayers)
                     if counterPlayers[0]=="":
                         return 0
-                    elif self.Playerlist[counterPlayers-1].isInGame == 0:
+                    elif self.Playerlist[int(counterPlayers[0])-1].isInGame == 0:
                         return 0
                     elif self.playerCount > len(counterPlayers) >= 2:
                         print("picking random player from the players that decided to attack")
-                        random.shuffle(counterPlayers)
-                        playerchallenge = int(counterPlayers[0])
                         if playerchallenge == currPlaya:
                             playerchallenge = int(counterPlayers[1])
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                        return self.canDoAction
+                    elif len(counterPlayers) == 1:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
                         self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         return self.canDoAction
@@ -196,7 +200,7 @@ class Game():
         elif whatCanLooseAt[1] != "hidden":
             cardLost = 1
         else:
-            cardLostC = random.randint(1,2) 
+            cardLost = random.randint(1,2) 
         if whatCanLooseCu[0] !="hidden":
             cardLostC = 2
         elif whatCanLooseCu[1] != "hidden":
@@ -532,11 +536,11 @@ class Game():
             print(self.Log[i])       
 
     def startGame(self):
+        self.playersLeft = []
         #start
         self.Log=[]
         #self.savelog("ewe")
         #self.savelog("fgfg")
-        print("aaa")
         #self.printlog()
         self.Ddeck = Deck()
         self.Ddeck.GenerateCards()
@@ -545,54 +549,55 @@ class Game():
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
+        self.playersLeft.append(1)
         #player1.SeeCards()
         #print(player1.canDoRial())
         self.Playerlist.append(player1)
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player2 = Player(2,2,card11,card22)
+        self.playersLeft.append(2)
         #player2.SeeCards()
         self.Playerlist.append(player2)
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player3 = Player(3,2,card11,card22)
         self.Playerlist.append(player3)
+        self.playersLeft.append(3)
         #player3.SeeCards()
         if self.playerCount == 4:
             card11 = self.Ddeck.takeCard()
             card22 = self.Ddeck.takeCard()
             player4 = Player(4,2,card11,card22)
             self.Playerlist.append(player4)
-            #player4.SeeCards()
-        #print("bruh")
-        #player1.SeeCoins()
-        #player1.coins()
-        #player1.SeeCoins()
-        #player1.canDoRial()
-        #player1.cardCoinCost(1)
-        #print(player1.gameStatus())
+            self.playersLeft.append(4)
         ActiveGame = 1
         curPlaya = 1
         turnNum = 1
-        #print(self.Playerlist[curPlaya-1].isInGame)
         print(len(self.Playerlist))
         while(ActiveGame==1):
-            #print("a")
-            if(self.Playerlist[curPlaya-1].isInGame==1):
+            if  len(self.playersLeft) != 1:
+                if(self.Playerlist[curPlaya-1].isInGame==1):
+                    print(self.playersLeft)
+                    print("Turn number %d\n"%(turnNum))
+                    self.PlayerTurn(curPlaya-1)
+                    if self.Playerlist[curPlaya-1].isInGame==0:
+                        playLost = self.playersLeft.index(curPlaya)
+                        self.playersLeft.pop(playLost)
+                    curPlaya+=1
+                    if curPlaya>self.playerCount:
+                        curPlaya = 1
+                        turnNum+=1
+                    
 
-                print("Turn number %d\n"%(turnNum))
-                self.PlayerTurn(curPlaya-1)
-                curPlaya+=1
-                if curPlaya>self.playerCount:
-                    curPlaya = 1
-                    turnNum+=1
-                
-
+                else:
+                    curPlaya+=1
+                    if curPlaya>self.playerCount:
+                        curPlaya = 1
+                        turnNum+=1
             else:
-                curPlaya+=1
-                if curPlaya>self.playerCount:
-                    curPlaya = 1
-                    turnNum+=1
+                ActiveGame= 0
+                print("Player %d has won!"%(self.playersLeft[0]))
 
 
 
