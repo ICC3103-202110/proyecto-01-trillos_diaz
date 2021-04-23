@@ -35,8 +35,6 @@ class Player():
             self.__card2 = cardToAdd
 
     def gameStatus(self):
-        print("testea1")
-        #print(self.__card1.cardStatus)
         if self.__card1.cardStatus == "shown" and self.__card2.cardStatus == "shown":
             self.__isInGame = 0
             self.__coins = 0
@@ -46,7 +44,6 @@ class Player():
             print("Player %d Is still in game!"%(self.number))
 
     def cardStatusSet(self,cardToFlip):
-        print("aqui llega la wea")
         if (cardToFlip == 1) and (self.__card1.cardStatus =="hidden"):
             self.__card1.cardStatusChange()
             

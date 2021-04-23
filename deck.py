@@ -1,5 +1,4 @@
 import random
-from player import Player
 from ambassador import Ambassador
 from assasin import Assasin
 from captain import Captain
@@ -28,22 +27,11 @@ class Deck():
         duke2 = Duke(5)
         duke3 = Duke(5)
         self.cardDeck=[ambas1,ambas2,ambas3,assasin1,assasin2,assasin3,captain1,captain2,captain3,contessa1,contessa2,contessa3,duke1,duke2,duke3]
-        #print(ambas1.cardStatusShow())
-        """
-        deckid=[ambas1.cardStatusShow(),ambas2.cardStatusShow(),ambas3.cardStatusShow(),assasin1.cardStatusShow()
-        ,assasin2.cardStatusShow(),assasin3.cardStatusShow(),captain1.cardStatusShow(),captain2.cardStatusShow()
-        ,captain3.cardStatusShow(),contessa1.cardStatusShow(),contessa2.cardStatusShow(),contessa3.cardStatusShow(),duke1.cardStatusShow(),duke2.cardStatusShow(),duke3.cardStatusShow()]
-        """
+
         random.shuffle(self.cardDeck)
-        #print(self.cardDeck)
-        #random.shuffle(deckid)
-        #duke1.cardprint()
-        #print(self.cardDeck)
-        #print(deckid)
         return self.cardDeck
         
     def takeCard(self):
-        #print("yeet")
         curcard = self.cardDeck[0]
         self.cardDeck.pop(0)
         return curcard
@@ -60,11 +48,4 @@ class Deck():
     
     def returnCardNo(self,card2see):
         return self.cardDeck[card2see].cardType
-    
-    
-
-    #def RandomizeCards(self):
-        #deck = cards
-        #random.shuffle(deck)
-        #return deck
  

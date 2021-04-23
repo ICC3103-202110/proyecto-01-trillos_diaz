@@ -29,8 +29,6 @@ class Card():
 
     def cardStatusChange(self):
         print(self.__cardStatus)
-        print("yeet")
-        #if self.__cardStatus == "hidden":
         self.__cardStatus ="shown"
 
     def cardprint(self):
