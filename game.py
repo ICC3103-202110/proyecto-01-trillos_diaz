@@ -303,7 +303,32 @@ class Game():
             select = int(input())
             if(select==1):
                 self.currActionPlaying = 5
-                self.canDoAction = self.counterAction(playy)
+                print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                counterPlayers = input().split(",")
+                print(counterPlayers)
+                if counterPlayers[0]=="":
+                    self.canDoAction == 1
+                elif self.playerCount > len(counterPlayers) >= 2:
+                    print("picking random player from the players that decided to attack")
+                    random.shuffle(counterPlayers)
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        playerchallenge = int(counterPlayers[1])
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                        self.canDoAction = 0
+                    else:
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
+                elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        self.canDoAction = 0
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                        self.canDoAction = 0
+                    else:
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
+                        #return self.canDoAction
                 if self.canDoAction ==1:
                     print("You manage to do the action")
                     self.DoCardAction(playy,1)
@@ -328,7 +353,32 @@ class Game():
             
             if(select==3):
                 self.currActionPlaying = 1
-                self.canDoAction = self.counterAction(playy)
+                print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                counterPlayers = input().split(",")
+                print(counterPlayers)
+                if counterPlayers[0]=="":
+                    self.canDoAction == 1
+                elif self.playerCount > len(counterPlayers) >= 2:
+                    print("picking random player from the players that decided to attack")
+                    random.shuffle(counterPlayers)
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        playerchallenge = int(counterPlayers[1])
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                        self.canDoAction = 0
+                    else:
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
+                elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        self.canDoAction = 0
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                        self.canDoAction = 0
+                    else:
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
+                        #return self.canDoAction
                 if self.canDoAction ==1:
                     print("You manage to do the action")
                     self.DoCardAction(playy,3)
@@ -530,7 +580,7 @@ class Game():
 
             else:
                 curPlaya+=1
-                if curPlaya<self.playerCount:
+                if curPlaya>self.playerCount:
                     curPlaya = 1
                     turnNum+=1
 
