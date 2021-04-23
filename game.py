@@ -32,8 +32,8 @@ class Game():
             return 2
           
         if(actTodo==3):
-            print("Your 2 cards")
             print("Pick which cards you want (a,b)")
+            print("Your 2 cards")
             print(self.Playerlist[currPlaya-1].printCardType(1), " (1)")
             print(self.Playerlist[currPlaya-1].printCardType(2), " (2)")
 
@@ -44,8 +44,7 @@ class Game():
             if int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 2:
                 print("You swap no cards cards")
                 self.Playerlist[currPlaya-1].SeeCards()
-            elif int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 3 and self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
-                
+            elif int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 3 and self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":               
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
                 self.Playerlist[currPlaya-1].SeeCards()
             elif int(cardsWanted[0]) == 1 and int(cardsWanted[1]) == 4 and self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
@@ -61,7 +60,7 @@ class Game():
                 if self.Playerlist[currPlaya-1].specCardStatus(1)== "hidden" or self.Playerlist[currPlaya-1].specCardStatus(2)== "hidden":
                     print("You swap both cards")
                     self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
-                    self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                    self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
                     self.Playerlist[currPlaya-1].SeeCards()
                 else:
                     print("Please insert card numbers in order, or dont try to replace a shown card")
@@ -124,7 +123,8 @@ class Game():
                             print("bruh3")
                         else:
                             print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                             return self.canDoAction
                     elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                         print("uwu")
@@ -133,11 +133,11 @@ class Game():
                             print("bruh3")
                         else:
                             print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                             return self.canDoAction
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
-                    self.canDoAction = self.challengePlayer(currPlaya,playerattack)
+                    self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
                     return self.canDoAction
         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
             playerattack = int(counterPlayers[0])
@@ -163,57 +163,94 @@ class Game():
                             print("bruh3")
                         else:
                             print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge)
+                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                             return self.canDoAction
                             
                 
                         ###uwu awa seguir aca
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
-                    self.canDoAction = self.challengePlayer(currPlaya,playerattack)
+                    self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
                     return self.canDoAction
         else:
             print("bruh1")
             
 
-    def challengePlayer(self,currPlaya,playerattack):
+    def challengePlayer(self,currPlaya,playerattack,mode):
         print(currPlaya)
-        
+        actionToChall = self.currActionPlaying    
         print(self.Playerlist[currPlaya-1].canDoRial())
         whatItDo = self.Playerlist[currPlaya-1].canDoRial()
         print(whatItDo)
-        if( whatItDo[0]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
-            print("The challenged player %d was not bluffing!!"%(currPlaya))
-            #self.Playerlist[currPlaya-1].SeeCards()
-            #print(self.Ddeck.returnDeck())
-            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
-            cardLost = random.randint(1,2)
-            #print(self.Ddeck.returnDeck())
-            #self.Playerlist[currPlaya-1].SeeCards()
-            print("So player %d lost his influence card number %d"%(playerattack,cardLost))
-            self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-            return 1
-        elif(whatItDo[1]==self.currActionPlaying and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
-            print("The challenged player %d was not bluffing!!"%(currPlaya))
-            #self.Playerlist[currPlaya-1].SeeCards()
-            #print(self.Ddeck.returnDeck())
-            self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
-            cardLost = random.randint(1,2)
-            #print(self.Ddeck.returnDeck())
-            #self.Playerlist[currPlaya-1].SeeCards()
-            print("So player %d lost his influence card number %d"%(playerattack,cardLost))
-            self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-            return 1
-        else:
-            print("The challenged player %d was bluffing!!"%(currPlaya))
-            #print(self.Playerlist[currPlaya-1].specCardStatus(1))
-            #print(self.Playerlist[currPlaya-1].specCardStatus(2))
-            cardLost = random.randint(1,2)
-            self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
-            print("So he looses his influence card number %d"%(cardLost))
-            #print(self.Playerlist[currPlaya-1].specCardStatus(1))
-            #print(self.Playerlist[currPlaya-1].specCardStatus(2))
-            return 0
+        if mode == 1:
+            if( whatItDo[0]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
+                print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                cardLost = random.randint(1,2)
+                print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+                self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                return 1
+            elif(whatItDo[1]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
+                print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
+                cardLost = random.randint(1,2)
+                print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+                self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                return 1
+            else:
+                print("The challenged player %d was bluffing!!"%(currPlaya))
+                cardLost = random.randint(1,2)
+                self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
+                print("So he looses his influence card number %d"%(cardLost))
+                return 0
+        elif mode == 2:
+            
+            print(self.Playerlist[currPlaya-1].printCardType(1))
+            print(self.Playerlist[currPlaya-1].printCardType(2))
+            if actionToChall ==2:
+                actionToChall = 4
+            elif actionToChall ==3:
+                actionToChall = 13
+            elif actionToChall == 6:
+                actionToChall = 5
+            else:
+                return 1
+                
+            actiontoChallS = str(actionToChall)
+            print(actiontoChallS)
+            print(str(whatItDo[0]))
+            print(str(whatItDo[1]))
+            if actiontoChallS.find( str(whatItDo[0])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
+                print("estaweafunciona1")
+                print("The challenged player %d was not bluffing!!"%(currPlaya))
+                
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
+                cardLost = random.randint(1,2)
+                print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+                print(self.Playerlist[currPlaya-1].printCardType(1))
+                print(self.Playerlist[currPlaya-1].printCardType(2))
+                self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                return 1
+            elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
+                print("estaweafunciona2")
+                print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
+                cardLost = random.randint(1,2)
+                print("So player %d lost his influence card number %d"%(playerattack,cardLost))
+                print(self.Playerlist[currPlaya-1].printCardType(1))
+                print(self.Playerlist[currPlaya-1].printCardType(2))
+                self.Playerlist[playerattack-1].cardStatusSet(cardLost)
+                return 1
+            else:
+                print("estaweafunciona3")
+                print("The challenged player %d was bluffing!!"%(currPlaya))
+                cardLost = random.randint(1,2)
+                self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
+                print("So he looses his influence card number %d"%(cardLost))
+                print(self.Playerlist[currPlaya-1].printCardType(1))
+                print(self.Playerlist[currPlaya-1].printCardType(2))
+                return 0
+            
     
     def PlayerTurn(self,currPlaya):
         playy = currPlaya+1
@@ -315,7 +352,7 @@ class Game():
             if(self.Playerlist[curPlaya-1].isInGame==1):
 
                 print("Turn number %d\n"%(turnNum))
-                Action = self.PlayerTurn(curPlaya-1)
+                self.PlayerTurn(curPlaya-1)
                 curPlaya+=1
                 if curPlaya>self.playerCount:
                     curPlaya = 1
@@ -341,7 +378,7 @@ class Game():
         #x=Playerlist[1].CurrentPlayer()
 
         #action = ewe.PlayerTurn()
-        print(Action)
+        #print(Action)
         
 
 
