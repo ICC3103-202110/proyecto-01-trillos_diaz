@@ -23,16 +23,16 @@ class Game():
                 cardLost = random.randint(1,2)
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(cardLost)
                 print("Player %d lost his influence card number %d"%(AttackedPlaya,cardLost))
-                self.Playerlist[AttackedPlaya-1].gameStatus
+                self.Playerlist[AttackedPlaya-1].gameStatus()
                 print(whatCards)
             elif whatCards[0]== "hidden" and  whatCards[1]== "shown":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(1)
                 print("Player %d lost his influence card number 1"%(AttackedPlaya))
-                self.Playerlist[AttackedPlaya-1].gameStatus
+                self.Playerlist[AttackedPlaya-1].gameStatus()
             elif whatCards[0]== "shown" and  whatCards[1]== "hidden":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(2)
                 print("Player %d lost his influence card number 2"%(AttackedPlaya))
-                self.Playerlist[AttackedPlaya-1].gameStatus
+                self.Playerlist[AttackedPlaya-1].gameStatus()
             
             return 2
           
@@ -198,7 +198,7 @@ class Game():
                 cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-                self.Playerlist[playerattack-1].gameStatus
+                self.Playerlist[playerattack-1].gameStatus()
                 return 1
             elif(whatItDo[1]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
@@ -206,14 +206,14 @@ class Game():
                 cardLost = random.randint(1,2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-                self.Playerlist[playerattack-1].gameStatus
+                self.Playerlist[playerattack-1].gameStatus()
                 return 1
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
                 cardLost = random.randint(1,2)
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
                 print("So he loses his influence card number %d"%(cardLost))
-                self.Playerlist[currPlaya-1].gameStatus
+                self.Playerlist[currPlaya-1].gameStatus()
                 return 0
         elif mode == 2:
             
@@ -242,7 +242,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-                self.Playerlist[playerattack-1].gameStatus
+                self.Playerlist[playerattack-1].gameStatus()
                 return 1
             elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
                 print("estaweafunciona2")
@@ -253,7 +253,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
-                self.Playerlist[playerattack-1].gameStatus
+                self.Playerlist[playerattack-1].gameStatus()
                 return 1
             else:
                 print("estaweafunciona3")
@@ -261,7 +261,7 @@ class Game():
                 cardLost = random.randint(1,2)
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLost)
                 print("So he looses his influence card number %d"%(cardLost))
-                self.Playerlist[currPlaya-1].gameStatus
+                self.Playerlist[currPlaya-1].gameStatus()
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 return 0
@@ -284,7 +284,7 @@ class Game():
             cardLost = random.randint(1,2)
             print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
             self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
-            self.Playerlist[playerToCoup-1].gameStatus
+            self.Playerlist[playerToCoup-1].gameStatus()
             self.Playerlist[currPlaya].coinsChange(-7)
             print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
             return 6
@@ -365,7 +365,7 @@ class Game():
                     cardLost = random.randint(1,2)
                     print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
                     self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
-                    self.Playerlist[playerToCoup-1].gameStatus
+                    self.Playerlist[playerToCoup-1].gameStatus()
                     self.Playerlist[currPlaya].coinsChange(-7)
                     print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
                     return 6
