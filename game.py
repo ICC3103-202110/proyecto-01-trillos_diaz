@@ -536,7 +536,7 @@ class Game():
             print(self.Log[i])       
 
     def startGame(self):
-        self.playersLeft = 0
+        self.playersLeft = []
         #start
         self.Log=[]
         #self.savelog("ewe")
@@ -549,28 +549,28 @@ class Game():
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player1 = Player(1,2,card11,card22)
-        self.playersLeft +=1
+        self.playersLeft.append(1)
         #player1.SeeCards()
         #print(player1.canDoRial())
         self.Playerlist.append(player1)
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player2 = Player(2,2,card11,card22)
-        self.playersLeft +=1
+        self.playersLeft.append(1)
         #player2.SeeCards()
         self.Playerlist.append(player2)
         card11 = self.Ddeck.takeCard()
         card22 = self.Ddeck.takeCard()
         player3 = Player(3,2,card11,card22)
         self.Playerlist.append(player3)
-        self.playersLeft +=1
+        self.playersLeft.append(1)
         #player3.SeeCards()
         if self.playerCount == 4:
             card11 = self.Ddeck.takeCard()
             card22 = self.Ddeck.takeCard()
             player4 = Player(4,2,card11,card22)
             self.Playerlist.append(player4)
-            self.playersLeft +=1
+            self.playersLeft.append(1)
         ActiveGame = 1
         curPlaya = 1
         turnNum = 1
@@ -584,11 +584,16 @@ class Game():
                     isBruh = 0
                     while isBruh < self.playerCount:
                         if self.Playerlist[isBruh].isInGame==0:
-                            self.playersLeft-=1
+                            self.playersLeft[isBruh] = 0
                         isBruh +=1
-                    if self.playersLeft == 1:
-                        print("Player %d has won!"%(curPlaya))
-                        ActiveGame = 0
+                    if self.playerCount == 3:
+                        if self.playersLeft[0]+self.playersLeft[1]+self.playersLeft[2]== 1:
+                            print("Player %d has won!"%(curPlaya))
+                            ActiveGame = 0
+                    else:
+                        if self.playersLeft[0]+self.playersLeft[1]+self.playersLeft[2]+self.playersLeft[3]== 1:
+                            print("Player %d has won!"%(curPlaya))
+                            ActiveGame = 0
 
                     curPlaya+=1
                     
@@ -602,9 +607,6 @@ class Game():
                     if curPlaya>self.playerCount:
                         curPlaya = 1
                         turnNum+=1
-        else:
-            ActiveGame= 0
-            print("Player %d has won!"%(curPlaya))
 
 
 
