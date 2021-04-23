@@ -108,50 +108,51 @@ class Game():
             random.shuffle(counterPlayers)
             playerattack = int(counterPlayers[0])
             if playerattack == currPlaya:
-                print("bruh2")
-            else:
-                print("Player %d was chosen to do an action"%(playerattack))
-                print("Player %d, what do you wish to do?\nCOUNTERATTACK = (0)\nCHALLENGE =(1)"%(playerattack))
-                whattodo = int(input())
-                if whattodo == 0:
-                    print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
-                    print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
-                    counterPlayers = input().split(",")
-                    print("h")
-                    print(counterPlayers)
-                    print("a")
-                    if counterPlayers[0]=="":
-                        print("e")
+                playerattack = int(counterPlayers[1])
+            elif self.Playerlist[playerattack-1].isInGame == 0:
+                return 1
+            print("Player %d was chosen to do an action"%(playerattack))
+            print("Player %d, what do you wish to do?\nCOUNTERATTACK = (0)\nCHALLENGE =(1)"%(playerattack))
+            whattodo = int(input())
+            if whattodo == 0:
+                print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
+                counterPlayers = input().split(",")
+                print(counterPlayers)
+                if counterPlayers[0]=="":
+                    return 0
+                elif self.playerCount > len(counterPlayers) >= 2:
+                    print("picking random player from the players that decided to attack")
+                    random.shuffle(counterPlayers)
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        playerchallenge = int(counterPlayers[1])
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         return 0
-                    elif self.playerCount > len(counterPlayers) >= 2:
-                        print("ewe")
-                        print("picking random player from the players that decided to attack")
-                        random.shuffle(counterPlayers)
-                        playerchallenge = int(counterPlayers[0])
-                        if playerchallenge == currPlaya:
-                            print("bruh3")
-                        else:
-                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
-                            return self.canDoAction
-                    elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
-                        print("uwu")
-                        playerchallenge = int(counterPlayers[0])
-                        if playerchallenge == currPlaya:
-                            print("bruh3")
-                        else:
-                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
-                            return self.canDoAction
-                elif whattodo == 1:
-                    print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
-                    self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
+                    print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))  
+                    self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                     return self.canDoAction
+                elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
+                    #print("uwu")
+                    playerchallenge = int(counterPlayers[0])
+                    if playerchallenge == currPlaya:
+                        return 0
+                    elif self.Playerlist[playerchallenge-1].isInGame == 0:
+                        return 0
+                    else:
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                        return self.canDoAction
+            elif whattodo == 1:
+                print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
+                self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
+                return self.canDoAction
         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
             playerattack = int(counterPlayers[0])
             if playerattack == currPlaya:
-                print("bruh2")
+                return 0
+            elif self.Playerlist[playerattack-1].isInGame == 0:
+                return 1
             else:
                 print("Player %d chose to do an action"%(playerattack))
                 print("Player %d, what do you wish to do?\nCOUNTERATTACK = (0)\nCHALLENGE =(1)"%(playerattack))
@@ -161,22 +162,20 @@ class Game():
                     print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                     counterPlayers = input().split(",")
                     print(counterPlayers)
-                    #print("hdjashdj")
                     if counterPlayers[0]=="":
+                        return 0
+                    elif self.Playerlist[counterPlayers-1].isInGame == 0:
                         return 0
                     elif self.playerCount > len(counterPlayers) >= 2:
                         print("picking random player from the players that decided to attack")
                         random.shuffle(counterPlayers)
                         playerchallenge = int(counterPlayers[0])
-                        if playerattack == currPlaya:
-                            print("bruh3")
-                        else:
-                            print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
-                            self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
-                            return self.canDoAction
+                        if playerchallenge == currPlaya:
+                            playerchallenge = int(counterPlayers[1])
+                        print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
+                        return self.canDoAction
                             
-                
-                        ###uwu awa seguir aca
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
                     self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
@@ -280,7 +279,14 @@ class Game():
         if self.Playerlist[currPlaya].coins >= 10:
             print("You automatically do a coup!")
             print("What player do you want to do a coup on?")
-            playerToCoup = int(input())
+            loop = 0
+            while loop == 0:
+                playerToCoup = int(input())
+                if(playerToCoup==playy or playerToCoup<0 or playerToCoup>len(self.Playerlist)):
+                    loop = 0
+                    print("You can't select that, Select again")
+                elif(playerToCoup<0 and playerToCoup>len(self.Playerlist)):
+                    loop = 1
             cardLost = random.randint(1,2)
             print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
             self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
@@ -372,10 +378,20 @@ class Game():
                 else:
                     print("You don´t have enough coins to do this action")
 
-            
+    def savelog(self,action):
+        self.Log.append(action)
+
+    def printlog(self):
+        for i in range(len(self.Log)):
+            print(self.Log[i])       
 
     def startGame(self):
         #start
+        self.Log=[]
+        #self.savelog("ewe")
+        #self.savelog("fgfg")
+        print("aaa")
+        #self.printlog()
         self.Ddeck = Deck()
         self.Ddeck.GenerateCards()
         #print(self.Ddeck)
@@ -413,6 +429,7 @@ class Game():
         curPlaya = 1
         turnNum = 1
         #print(self.Playerlist[curPlaya-1].isInGame)
+        print(len(self.Playerlist))
         while(ActiveGame==1):
             #print("a")
             if(self.Playerlist[curPlaya-1].isInGame==1):
