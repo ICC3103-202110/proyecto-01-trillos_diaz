@@ -254,7 +254,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
-                return 1
+                return 0
             elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
@@ -263,7 +263,7 @@ class Game():
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
-                return 1
+                return 0
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLostC)
@@ -271,7 +271,7 @@ class Game():
                 self.Playerlist[currPlaya-1].gameStatus()
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
-                return 0
+                return 1
             
     
     def PlayerTurn(self,currPlaya):
@@ -560,7 +560,7 @@ class Game():
         while(ActiveGame==1):
             if  self.playersLeft != 1:
                 if(self.Playerlist[curPlaya-1].isInGame==1):
-                    print(self.playersLeft)
+                    print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
                     print("Turn number %d\n"%(turnNum))
                     self.PlayerTurn(curPlaya-1)
                     isBruh = 0
@@ -570,11 +570,25 @@ class Game():
                         isBruh +=1
                     if self.playerCount == 3:
                         if self.playersLeft[0]+self.playersLeft[1]+self.playersLeft[2]== 1:
-                            print("Player %d has won!"%(curPlaya))
+                            if self.playersLeft[0] == 1:
+                                winna = 1
+                            elif self.playersLeft[1] == 1:
+                                winna = 2
+                            elif self.playersLeft[2] == 1:
+                                winna = 3
+                            print("Player %d has won!"%(winna))
                             ActiveGame = 0
                     else:
                         if self.playersLeft[0]+self.playersLeft[1]+self.playersLeft[2]+self.playersLeft[3]== 1:
-                            print("Player %d has won!"%(curPlaya))
+                            if self.playersLeft[0] == 1:
+                                winna = 1
+                            elif self.playersLeft[1] == 1:
+                                winna = 2
+                            elif self.playersLeft[2] == 1:
+                                winna = 3
+                            elif self.playersLeft[3] == 1:
+                                winna = 4
+                            print("Player %d has won!"%(winna))
                             ActiveGame = 0
 
                     curPlaya+=1
