@@ -81,7 +81,7 @@ class Game():
                     print("Please insert card numbers in order, or dont try to replace a shown card")
             else:
                 print("Please insert card numbers in order, or dont try to replace a shown card")
-            self.savelog("Player %d swap his cards"%(currPlaya))
+            self.savelog("Player %d swapped his cards"%(currPlaya))
             return 3
         if(actTodo==4):
             print("What player do you want to steal from?")
@@ -316,10 +316,14 @@ class Game():
         playy = currPlaya+1
         self.canDoAction = 1
         print("Player number %d it's your turn"%(playy))
+        print("================================")
         ccoins = 0
         while ccoins < self.playerCount:
             print("Player %d´s coins: %d"%(ccoins+1,self.Playerlist[ccoins].coins))
+            print("Player %d´s card 1 status: %s"%(ccoins+1,self.Playerlist[ccoins].specCardStatus(1)))
+            print("Player %d´s card 2 status: %s"%(ccoins+1,self.Playerlist[ccoins].specCardStatus(2)))
             ccoins +=1
+        print("================================")
         print("Your cards:        %s , %s"%(self.Playerlist[currPlaya].printCardType(1),self.Playerlist[currPlaya].printCardType(2)))
         print("Your cards status: %s , %s"%(self.Playerlist[currPlaya].specCardStatus(1),self.Playerlist[currPlaya].specCardStatus(2)))
         if self.Playerlist[currPlaya].coins >= 10:
