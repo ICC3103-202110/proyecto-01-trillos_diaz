@@ -12,6 +12,7 @@ class Game():
         if(actTodo==1):
             self.Playerlist[currPlaya-1].coinsChange(3)
             print("You got 3 coins from taxes!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+            self.savelog("Player %d got 3 coins from TAX"%(self.Playerlist[currPlaya-1].coins))
             return 1
             
         if(actTodo==2):
@@ -23,15 +24,18 @@ class Game():
                 cardLost = random.randint(1,2)
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(cardLost)
                 print("Player %d lost his influence card number %d"%(AttackedPlaya,cardLost))
+                self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
                 print(whatCards)
             elif whatCards[0]== "hidden" and  whatCards[1]== "shown":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(1)
                 print("Player %d lost his influence card number 1"%(AttackedPlaya))
+                self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
             elif whatCards[0]== "shown" and  whatCards[1]== "hidden":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(2)
                 print("Player %d lost his influence card number 2"%(AttackedPlaya))
+                self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
             
             return 2
@@ -116,6 +120,7 @@ class Game():
             whattodo = int(input())
             if whattodo == 0:
                 print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                self.savelog("Player %d Counterattack Player %d action"%(playerattack,currPlaya))
                 print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                 counterPlayers = input().split(",")
                 print(counterPlayers)
@@ -129,7 +134,8 @@ class Game():
                         playerchallenge = int(counterPlayers[1])
                     elif self.Playerlist[playerchallenge-1].isInGame == 0:
                         return 0
-                    print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))  
+                    print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                    self.savelog("Player %d challenge Player %d Counterattack"%(playerchallenge,playerattack))
                     self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                     return self.canDoAction
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
@@ -140,10 +146,12 @@ class Game():
                         return 0
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.savelog("Player %d challenge Player %d Counterattack"%(playerchallenge,playerattack))
                         self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         return self.canDoAction
             elif whattodo == 1:
                 print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
+                self.savelog("Player %d challenge Player %d Action"%(playerattack,currPlaya))
                 self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
                 return self.canDoAction
         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
@@ -158,6 +166,7 @@ class Game():
                 whattodo = int(input())
                 if whattodo == 0:
                     print("Player %d counterattacks Player %d!!"%(playerattack,currPlaya))
+                    self.savelog("Player %d Counterattack Player %d Action"%(playerattack,currPlaya))
                     print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                     counterPlayers = input().split(",")
                     random.shuffle(counterPlayers)
@@ -172,15 +181,18 @@ class Game():
                         if playerchallenge == currPlaya:
                             playerchallenge = int(counterPlayers[1])
                         print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.savelog("Player %d challenge Player %d Counterattack"%(playerchallenge,playerattack))
                         self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         return self.canDoAction
                     elif len(counterPlayers) == 1:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                        self.savelog("Player %d challenge Player %d Counterattack"%(playerchallenge,playerattack))
                         self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         return self.canDoAction
                             
                 elif whattodo == 1:
                     print("Player %d challenges Player %d!!"%(playerattack,currPlaya))
+                    self.savelog("Player %d challenge Player %d Action"%(playerattack,currPlaya))
                     self.canDoAction = self.challengePlayer(currPlaya,playerattack,1)
                     return self.canDoAction
         else:
@@ -314,7 +326,7 @@ class Game():
             select = int(input())
             if(select==1):
                 self.currActionPlaying = 5
-                self.savelog("Player %d use TAX action"%(playy))
+                self.savelog("Player %d used TAX action"%(playy))
                 print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                 counterPlayers = input().split(",")
                 print(counterPlayers)
@@ -340,7 +352,7 @@ class Game():
                         self.canDoAction = 0
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playy))
-                        self.savelog("Player %d Challenge Player %d TAX"%(playerchallenge,playy))
+                        self.savelog("Player %d Challenge Player %d Action"%(playerchallenge,playy))
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                         #return self.canDoAction
                 if self.canDoAction ==1:
@@ -352,6 +364,7 @@ class Game():
                 
             if(select==2):
                 if self.Playerlist[currPlaya].coins >= 3:
+                    self.savelog("Player %d used ASSASSINATE action"%(playy))
                     self.currActionPlaying = 2
                     self.canDoAction = self.counterAction(playy)
                     if self.canDoAction ==1:
@@ -366,6 +379,7 @@ class Game():
                     print("You don´t have enough coins to do this action")
             
             if(select==3):
+                self.savelog("Player %d used EXCHANGE action"%(playy))
                 self.currActionPlaying = 1
                 print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                 counterPlayers = input().split(",")
@@ -400,6 +414,7 @@ class Game():
                     print("Player%d Does not do the action"%(playy))
                 return 3
             if(select==4):
+                self.savelog("Player %d used STEAL action"%(playy))
                 self.currActionPlaying = 3
                 self.canDoAction = self.counterAction(playy)
                 if self.canDoAction ==1:
@@ -419,6 +434,7 @@ class Game():
                 return 5
             elif select == 2:
                 self.currActionPlaying = 6
+                self.savelog("Player %d used FOREING AID action"%(playy))
                 print("Does any player want to Counterattack this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                 counterPlayers = input().split(",")
                 print(counterPlayers)
@@ -507,6 +523,7 @@ class Game():
             elif select == 3:
                 if self.Playerlist[currPlaya].coins >= 7:
                     print("What player do you want to do a coup on?")
+                    self.savelog("Player %d used COUP action"%(playy))
                     playerToCoup = int(input())
                     cardLost = random.randint(1,2)
                     print("So player %d lost his influence card number %d"%(playerToCoup,cardLost))
