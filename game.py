@@ -12,7 +12,7 @@ class Game():
         if(actTodo==1):
             self.Playerlist[currPlaya-1].coinsChange(3)
             print("You got 3 coins from taxes!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
-            self.savelog("Player %d got 3 coins from TAX"%(self.Playerlist[currPlaya-1].coins))
+            self.savelog("Player %d got 3 coins from TAX"%(currPlaya))
             return 1
             
         if(actTodo==2):
@@ -27,16 +27,22 @@ class Game():
                 self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
                 print(whatCards)
+                if self.Playerlist[AttackedPlaya-1].isInGame == 0:
+                    self.savelog("Player %d died"%(AttackedPlaya))
             elif whatCards[0]== "hidden" and  whatCards[1]== "shown":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(1)
                 print("Player %d lost his influence card number 1"%(AttackedPlaya))
                 self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
+                if self.Playerlist[AttackedPlaya-1].isInGame == 0:
+                    self.savelog("Player %d died"%(AttackedPlaya))
             elif whatCards[0]== "shown" and  whatCards[1]== "hidden":
                 self.Playerlist[AttackedPlaya-1].cardStatusSet(2)
                 print("Player %d lost his influence card number 2"%(AttackedPlaya))
                 self.savelog("Player %d Assasinate Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].gameStatus()
+                if self.Playerlist[AttackedPlaya-1].isInGame == 0:
+                    self.savelog("Player %d died"%(AttackedPlaya))
             
             return 2
           
@@ -75,7 +81,7 @@ class Game():
                     print("Please insert card numbers in order, or dont try to replace a shown card")
             else:
                 print("Please insert card numbers in order, or dont try to replace a shown card")
-            
+            self.savelog("Player %d swap his cards"%(currPlaya))
             return 3
         if(actTodo==4):
             print("What player do you want to steal from?")
@@ -86,15 +92,18 @@ class Game():
                 print("You stole 2 coins from player %d\nYour current ammount of coins is %d"%(AttackedPlaya,self.Playerlist[currPlaya-1].coins))
                 self.Playerlist[AttackedPlaya-1].coinsChange(-2)
                 print("Player %d has %d coins left!"%(AttackedPlaya,self.Playerlist[AttackedPlaya-1].coins))
+                self.savelog("Player %d stole 2 coins from Player %d"%(currPlaya,AttackedPlaya))
             elif howManyCoins == 1:
                 print("Player %d has only 1 coin"%(AttackedPlaya))
                 self.Playerlist[currPlaya-1].coinsChange(1)
                 print("You stole 1 coin from him\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                self.savelog("Player %d stole 1 coin from Player %d"%(currPlaya,AttackedPlaya))
                 self.Playerlist[AttackedPlaya-1].coinsChange(-1)
                 print("Player %d has no coins left!")
             elif howManyCoins == 0:
                 print("Player %d did´t have any coins left!"%(AttackedPlaya))
                 print("So you wasted your turn and did not gain anything\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya-1].coins))
+                self.savelog("Player %d stole 0 coins from Player %d"%(currPlaya,AttackedPlaya))
                 
             return 4
 
@@ -222,23 +231,32 @@ class Game():
         if mode == 1:
             if( whatItDo[0]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.savelog("Player %d was not bluffing, Player %d lost the Challenge"%(currPlaya,playerattack))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
+                if self.Playerlist[playerattack-1].isInGame == 0:
+                    self.savelog("Player %d died"%(playerattack))
                 return 1
             elif(whatItDo[1]==actionToChall and self.Playerlist[currPlaya-1].specCardStatus(2)=="hidden"):
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.savelog("Player %d was not bluffing, Player %d lost the Challenge"%(currPlaya,playerattack))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
+                if self.Playerlist[playerattack-1].isInGame == 0:
+                    self.savelog("Player %d died"%(playerattack))
                 return 1
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
+                self.savelog("Player %d was bluffing, Player %d lost the Challenge"%(currPlaya,currPlaya))
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLostC)
                 print("So he loses his influence card number %d"%(cardLost))
                 self.Playerlist[currPlaya-1].gameStatus()
+                if self.Playerlist[currPlaya-1].isInGame == 0:
+                    self.savelog("Player %d died"%(currPlaya))
                 return 0
         elif mode == 2:
             
@@ -259,28 +277,36 @@ class Game():
             print(str(whatItDo[1]))
             if actiontoChallS.find( str(whatItDo[0])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
-                
+                self.savelog("Player %d was not bluffing, Player %d lost the Challenge"%(currPlaya,playerattack))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card1,1),1)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
+                if self.Playerlist[playerattack-1].isInGame == 0:
+                    self.savelog("Player %d died"%(playerattack))
                 return 0
             elif actiontoChallS.find( str(whatItDo[1])) != -1 and self.Playerlist[currPlaya-1].specCardStatus(1)=="hidden":
                 print("The challenged player %d was not bluffing!!"%(currPlaya))
+                self.savelog("Player %d was not bluffing, Player %d lost the Challenge"%(currPlaya,playerattack))
                 self.Playerlist[currPlaya-1].setCard(self.Ddeck.replaceCard(self.Playerlist[currPlaya-1].card2,1),2)
                 print("So player %d lost his influence card number %d"%(playerattack,cardLost))
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 self.Playerlist[playerattack-1].cardStatusSet(cardLost)
                 self.Playerlist[playerattack-1].gameStatus()
+                if self.Playerlist[playerattack-1].isInGame == 0:
+                    self.savelog("Player %d died"%(playerattack))
                 return 0
             else:
                 print("The challenged player %d was bluffing!!"%(currPlaya))
+                self.savelog("Player %d was bluffing, Player %d lost the Challenge"%(currPlaya,currPlaya))
                 self.Playerlist[currPlaya-1].cardStatusSet(cardLostC)
                 print("So he looses his influence card number %d"%(cardLostC))
                 self.Playerlist[currPlaya-1].gameStatus()
+                if self.Playerlist[currPlaya-1].isInGame == 0:
+                    self.savelog("Player %d died"%(currPlaya))
                 print(self.Playerlist[currPlaya-1].printCardType(1))
                 print(self.Playerlist[currPlaya-1].printCardType(2))
                 return 1
@@ -314,6 +340,8 @@ class Game():
             self.savelog("Player %d COUP Player %d"%(playy,playerToCoup))
             self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
             self.Playerlist[playerToCoup-1].gameStatus()
+            if self.Playerlist[playerToCoup-1].isInGame == 0:
+                    self.savelog("Player %d died"%(playerToCoup))
             self.Playerlist[currPlaya].coinsChange(-7)
             print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
             return 6
@@ -530,6 +558,8 @@ class Game():
                     self.savelog("Player %d COUP Player %d"%(playy,playerToCoup))
                     self.Playerlist[playerToCoup-1].cardStatusSet(cardLost)
                     self.Playerlist[playerToCoup-1].gameStatus()
+                    if self.Playerlist[playerToCoup-1].isInGame == 0:
+                        self.savelog("Player %d died"%(playerToCoup))
                     self.Playerlist[currPlaya].coinsChange(-7)
                     print("Your current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
                     return 6
@@ -632,7 +662,7 @@ class Game():
                         if int(answer) == 0:
                             print("_______LOGS_______")
                             self.printlog()
-                        if logturns >= 8:
+                        if logturns >= 12:
                             logturns -= 4
                             self.totalLog.pop(0)
                         turnNum+=1
@@ -653,7 +683,7 @@ class Game():
                         if int(answer) == 0:
                             print("_______LOGS_______")
                             self.printlog()
-                        if logturns > 8:
+                        if logturns > 12:
                             logturns -= 4
                             self.totalLog.pop(0)
                         turnNum+=1
