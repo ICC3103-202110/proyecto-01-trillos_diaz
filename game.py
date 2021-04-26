@@ -656,6 +656,7 @@ class Game():
                     
                     if curPlaya>self.playerCount:
                         curPlaya = 1
+                        self.savelog("_______turn %d_______"%(turnNum))
                         self.loglist()
                         self.Log = []
                         curPlaya = 1
@@ -677,6 +678,7 @@ class Game():
                     curPlaya+=1
                     logturns+=1
                     if curPlaya>self.playerCount:
+                        self.savelog("_______turn %d_______"%(turnNum))
                         self.loglist()
                         self.Log = []
                         curPlaya = 1
@@ -687,6 +689,7 @@ class Game():
                         if int(answer) == 0:
                             print("_______LOGS_______")
                             self.printlog()
+                
                         if logturns > 12:
                             logturns -= 4
                             self.totalLog.pop(0)
