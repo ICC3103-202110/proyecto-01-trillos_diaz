@@ -428,6 +428,7 @@ class Game():
                         self.canDoAction = 1
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.savelog("Player %d Challenge Player %d action"%(playerchallenge,playy))
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                     playerchallenge = int(counterPlayers[0])
@@ -437,6 +438,7 @@ class Game():
                         self.canDoAction = 1
                     else:
                         print("Player %d challenges Player %d!!"%(playerchallenge,playy))
+                        self.savelog("Player %d Challenge Player %d action"%(playerchallenge,playy))
                         self.canDoAction = self.challengePlayer(playy,playerchallenge,1)
                         #return self.canDoAction
                 if self.canDoAction ==1:
@@ -481,7 +483,8 @@ class Game():
                     elif self.Playerlist[playerattack-1].isInGame == 0:
                         self.canDoAction = 1
                     else:
-                        print("Player %d CounterAttack Player %d"%(playerattack,currPlaya+1))
+                        print("Player %d CounterAttack Player %d"%(playerattack,playy))
+                        self.savelog("Player %d Counterattack Player %d Counterattack"%(playerattack,playy))
                         print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                         counterPlayers = input().split(",")
                         print(counterPlayers)
@@ -497,6 +500,7 @@ class Game():
                                 self.canDoAction = 0
                             else:
                                 print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.savelog("Player %d Challenge Player %d Counterattack"%(playerchallenge,playerattack))
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                             playerchallenge = int(counterPlayers[0])
@@ -506,6 +510,7 @@ class Game():
                                 self.canDoAction = 0
                             else:
                                 print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.savelog("Player %d Challenge Player %d Counterattack"%(playerchallenge,playerattack))
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                                 #return self.canDoAction
                 elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
@@ -516,7 +521,8 @@ class Game():
                     elif self.Playerlist[playerattack-1].isInGame == 0:
                         self.canDoAction = 1
                     else:
-                        print("Player %d CounterAttack Player %d"%(playerattack,currPlaya+1))
+                        print("Player %d CounterAttack Player %d"%(playerattack,playy))
+                        self.savelog("Player %d Counterattack Player %d action"%(playerattack,playy))
                         print("Does any player want to Challenge this action?\nIf more than one, use separate player numbers by using commas\nor leave empty if no one wants to do anything")
                         counterPlayers = input().split(",")
                         print(counterPlayers)
@@ -532,6 +538,7 @@ class Game():
                                 self.canDoAction = 0
                             else:
                                 print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.savelog("Player %d Challenge Player %d Counterattack"%(playerchallenge,playerattack))
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                             playerchallenge = int(counterPlayers[0])
@@ -541,12 +548,14 @@ class Game():
                                 self.canDoAction = 0
                             else:
                                 print("Player %d challenges Player %d!!"%(playerchallenge,playerattack))
+                                self.savelog("Player %d Challenge Player %d Counterattack"%(playerchallenge,playerattack))
                                 self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
 
                 if self.canDoAction ==1:
                     print("Player %d Does the action"%(playy))
                     self.Playerlist[currPlaya].coinsChange(2)
                     print("You got 2 coins from from a foreing country!\nYour current ammount of coins is %d"%(self.Playerlist[currPlaya].coins))
+                    self.savelog("Player %d got 2 coins with FOREING AID"%(playy))
                 else:
                     print("Player%d Does not do the action"%(playy))
                 return 6
