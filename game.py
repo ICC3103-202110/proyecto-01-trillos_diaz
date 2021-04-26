@@ -536,7 +536,7 @@ class Game():
                         elif len(counterPlayers) == 1 and len(counterPlayers) <= self.playerCount :
                             playerchallenge = int(counterPlayers[0])
                             if playerchallenge == playy:
-                                self.canDoAction = 0
+                                self.canDoAction = self.challengePlayer(playerattack,playerchallenge,2)
                             elif self.Playerlist[playerchallenge-1].isInGame == 0:
                                 self.canDoAction = 0
                             else:
